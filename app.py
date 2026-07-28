@@ -9,6 +9,14 @@ if "keranjang" not in st.session_state:
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
+# ===== INISIALISASI FORM =====
+if "nama_pemesan" not in st.session_state:
+    st.session_state.nama_pemesan = ""
+if "kelas" not in st.session_state:
+    st.session_state.kelas = ""
+if "no_hp" not in st.session_state:
+    st.session_state.no_hp = ""
+
 produk = [
     {"id": 1, "nama": "Kaos Polos Premium", "harga": 75000},
     {"id": 2, "nama": "Jaket Hoodie", "harga": 150000},
@@ -196,9 +204,26 @@ with st.sidebar:
         
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
-            nama_pemesan = st.text_input("Nama Lengkap", placeholder="Masukkan nama kamu")
-            kelas = st.text_input("Kelas", placeholder="Contoh: 10 IPA 1")
-            no_hp = st.text_input("No. HP (WA)", placeholder="Contoh: 08123456789")
+            
+            # ===== INPUT DENGAN SESSION STATE =====
+            nama_pemesan = st.text_input(
+                "Nama Lengkap", 
+                value=st.session_state.nama_pemesan,
+                placeholder="Masukkan nama kamu",
+                key="input_nama"
+            )
+            kelas = st.text_input(
+                "Kelas", 
+                value=st.session_state.kelas,
+                placeholder="Contoh: 10 IPA 1",
+                key="input_kelas"
+            )
+            no_hp = st.text_input(
+                "No. HP (WA)", 
+                value=st.session_state.no_hp,
+                placeholder="Contoh: 08123456789",
+                key="input_nohp"
+            )
             
             submit = st.form_submit_button("✅ Kirim Pesanan", use_container_width=True)
             
@@ -227,7 +252,6 @@ with st.sidebar:
                         url_tele = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
                         r = requests.post(url_tele, data={"chat_id": CHAT_ID, "text": pesan}, timeout=10)
                         
-                     
                         wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
                         wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
                         
@@ -235,7 +259,15 @@ with st.sidebar:
                             st.success(f"✅ Pesanan berhasil dikirim!")
                             st.balloons()
                             st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
+                            
+                            # ===== RESET SEMUA =====
                             st.session_state.keranjang = []
+                            st.session_state.nama_pemesan = ""
+                            st.session_state.kelas = ""
+                            st.session_state.no_hp = ""
+                            
+                            # Refresh halaman
+                            st.rerun()
                         else:
                             st.error("❌ Gagal kirim notif!")
                     except Exception as e:
