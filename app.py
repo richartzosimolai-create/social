@@ -171,7 +171,7 @@ cols = st.columns(3)
 for i, p in enumerate(produk):
     with cols[i % 3]:
        if "gambar" in p and p["gambar"]:
-    st.image(p["gambar"], use_container_width=True)
+          st.image(p["gambar"], use_container_width=True)
 else:
     st.markdown(f'<div class="gambar">{emoji}</div>', unsafe_allow_html=True)
         
