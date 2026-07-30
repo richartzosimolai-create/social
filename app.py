@@ -1,6 +1,21 @@
 import streamlit as st
 import requests
 
+# munculin data keranjang
+def buka_keranjang():
+    """Fungsi untuk membuka sidebar keranjang otomatis"""
+    st.session_state.show_cart = True
+    st.markdown("""
+    <script>
+        setTimeout(function() {
+            const sidebarBtn = document.querySelector('[data-testid="stSidebar"] button');
+            if (sidebarBtn) {
+                sidebarBtn.click();
+            }
+        }, 200);
+    </script>
+    """, unsafe_allow_html=True)
+
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
 if "keranjang" not in st.session_state:
@@ -168,6 +183,7 @@ for i, p in enumerate(produk):
         if st.button(f"🛒 Tambahkan ke Keranjang", key=f"add_{p['id']}"):
             st.session_state.keranjang.append(p)
             st.session_state.show_cart = True
+            buka_keranjang()  
             st.rerun()
 
 total_item = len(st.session_state.keranjang)
@@ -179,6 +195,19 @@ st.markdown(f"""
     <span class="count">{total_item}</span>
 </div>
 """, unsafe_allow_html=True)
+
+# cek show cartny
+if st.session_state.show_cart:
+    st.markdown("""
+    <script>
+        setTimeout(function() {
+            const sidebarBtn = document.querySelector('[data-testid="stSidebar"] button');
+            if (sidebarBtn) {
+                sidebarBtn.click();
+            }
+        }, 200);
+    </script>
+    """, unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown("## 🛒 Keranjang Belanja")
@@ -205,7 +234,7 @@ with st.sidebar:
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
             
-            # ===== INPUT DENGAN SESSION STATE =====
+            # input session stage
             nama_pemesan = st.text_input(
                 "Nama Lengkap", 
                 value=st.session_state.nama_pemesan,
@@ -260,13 +289,13 @@ with st.sidebar:
                             st.balloons()
                             st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                             
-                            # ===== RESET SEMUA =====
+                            # buat reser
                             st.session_state.keranjang = []
                             st.session_state.nama_pemesan = ""
                             st.session_state.kelas = ""
                             st.session_state.no_hp = ""
                             
-                            # Refresh halaman
+                            # ngerefresh halamanny
                             st.rerun()
                         else:
                             st.error("❌ Gagal kirim notif!")
