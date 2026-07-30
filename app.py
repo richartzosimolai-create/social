@@ -9,7 +9,7 @@ if "keranjang" not in st.session_state:
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
-# ===== INISIALISASI FORM =====
+# formny
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
@@ -146,7 +146,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="header">
-    <h1>🛍️ <span>Social 9D</span> Saya</h1>
+    <h1>🛍️ <span>Social 9D</span> </h1>
     <div class="badge">6 Produk</div>
 </div>
 """, unsafe_allow_html=True)
