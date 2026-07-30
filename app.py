@@ -36,12 +36,12 @@ if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
 produk = [
-    {"id": 1, "nama": "67", "harga": 67, "gambar": "https://share.google/Cv5OAa8HW9ndwjUta"},
+    {"id": 1, "nama": "67", "harga": 67},
     {"id": 2, "nama": "67", "harga": 67},
-    {"id": 3, "nama": "67", "harga": 67 },
-    {"id": 4, "nama": "67", "harga": 67 },
-    {"id": 5, "nama": "67", "harga": 67 },
-    {"id": 6, "nama": "67", "harga": 67 },
+    {"id": 3, "nama": "67", "harga": 67},
+    {"id": 4, "nama": "67", "harga": 67},
+    {"id": 5, "nama": "67", "harga": 67},
+    {"id": 6, "nama": "67", "harga": 67},
 ]
 
 st.markdown("""
@@ -170,12 +170,11 @@ cols = st.columns(3)
 
 for i, p in enumerate(produk):
     with cols[i % 3]:
-        # tampilin gambar
-        if "gambar" in p and p["gambar"]:
-            st.image(p["gambar"], use_container_width=True)
+        emoji = ["1", "2", "3", "4", "5", "6"][i]
         
         st.markdown(f"""
         <div class="product-card">
+            <div class="gambar">{emoji}</div>
             <h3>{p['nama']}</h3>
             <p class="harga">Rp{p['harga']:,}</p>
         </div>
