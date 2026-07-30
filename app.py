@@ -18,12 +18,12 @@ if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
 produk = [
-    {"id": 1, "nama": "Kaos Polos Premium", "harga": 75000},
-    {"id": 2, "nama": "Jaket Hoodie", "harga": 150000},
-    {"id": 3, "nama": "Celana Chino", "harga": 120000},
-    {"id": 4, "nama": "Sepatu Sneakers", "harga": 250000},
-    {"id": 5, "nama": "Tas Ransel", "harga": 180000},
-    {"id": 6, "nama": "Jam Tangan Sport", "harga": 200000},
+    {"id": 1, "nama": "67", "harga": 67},
+    {"id": 2, "nama": "67", "harga": 67},
+    {"id": 3, "nama": "67", "harga": 67},
+    {"id": 4, "nama": "67", "harga": 67},
+    {"id": 5, "nama": "67", "harga": 67},
+    {"id": 6, "nama": "67", "harga": 67},
 ]
 
 TOKEN = "8624888114:AAFEo-HDSx01ZAT4kFD7JzL-R49_slYh8m4"
@@ -146,7 +146,7 @@ st.markdown("""
 
 st.markdown("""
 <div class="header">
-    <h1>🛍️ <span>Toko</span> Saya</h1>
+    <h1>🛍️ <span>Social 9D</span> Saya</h1>
     <div class="badge">6 Produk</div>
 </div>
 """, unsafe_allow_html=True)
@@ -275,6 +275,6 @@ with st.sidebar:
 
 st.markdown("""
 <div class="footer">
-    © 2026 Toko Saya - Tugas Sekolah
+    Social 9D
 </div>
 """, unsafe_allow_html=True)
