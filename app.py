@@ -8,7 +8,6 @@ FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"
 NO_HP_KAMU = "81180895229"      
 
 def kirim_wa(pesan):
-    """Kirim pesan ke WhatsApp pake Fonnte"""
     url = "https://api.fonnte.com/send"
     data = {
         "target": NO_HP_KAMU,
@@ -265,10 +264,9 @@ with st.sidebar:
                     """
                     
                     try:
-                        # ===== KIRIM KE WHATSAPP (FONNTE) =====
+                        
                         kirim_wa(pesan)
                         
-                        # ===== LINK WHATSAPP =====
                         wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
                         wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
                         
