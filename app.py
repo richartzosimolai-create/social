@@ -3,6 +3,25 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
+# fonte wa
+FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
+NO_HP_KAMU = "81180895229"      
+
+def kirim_wa(pesan):
+    """Kirim pesan ke WhatsApp pake Fonnte"""
+    url = "https://api.fonnte.com/send"
+    data = {
+        "target": NO_HP_KAMU,
+        "message": pesan,
+        "countryCode": "62",
+    }
+    headers = {"Authorization": FONNTE_API}
+    try:
+        response = requests.post(url, data=data, headers=headers, timeout=10)
+        return response.status_code == 200
+    except:
+        return False
+
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
 
@@ -25,9 +44,6 @@ produk = [
     {"id": 5, "nama": "67", "harga": 67},
     {"id": 6, "nama": "67", "harga": 67},
 ]
-
-TOKEN = "8624888114:AAFEo-HDSx01ZAT4kFD7JzL-R49_slYh8m4"
-CHAT_ID = "8920670099"
 
 st.markdown("""
 <style>
@@ -249,27 +265,25 @@ with st.sidebar:
                     """
                     
                     try:
-                        url_tele = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-                        r = requests.post(url_tele, data={"chat_id": CHAT_ID, "text": pesan}, timeout=10)
+                        # ===== KIRIM KE WHATSAPP (FONNTE) =====
+                        kirim_wa(pesan)
                         
+                        # ===== LINK WHATSAPP =====
                         wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
                         wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
                         
-                        if r.status_code == 200:
-                            st.success(f"✅ Pesanan berhasil dikirim!")
-                            st.balloons()
-                            st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
-                            
-                            # buat reser
-                            st.session_state.keranjang = []
-                            st.session_state.nama_pemesan = ""
-                            st.session_state.kelas = ""
-                            st.session_state.no_hp = ""
-                            
-                            # ngerefresh halamanny
-                            st.rerun()
-                        else:
-                            st.error("❌ Gagal kirim notif!")
+                        st.success(f"✅ Pesanan berhasil dikirim!")
+                        st.balloons()
+                        st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
+                        
+                        # buat reser
+                        st.session_state.keranjang = []
+                        st.session_state.nama_pemesan = ""
+                        st.session_state.kelas = ""
+                        st.session_state.no_hp = ""
+                        
+                        # ngerefresh halamanny
+                        st.rerun()
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
 
