@@ -1,9 +1,8 @@
 import streamlit as st
 import requests
 
-# munculin data keranjang
+# munculin data produk
 def buka_keranjang():
-    """Fungsi untuk membuka sidebar keranjang otomatis"""
     st.session_state.show_cart = True
     st.markdown("""
     <script>
@@ -12,7 +11,7 @@ def buka_keranjang():
             if (sidebarBtn) {
                 sidebarBtn.click();
             }
-        }, 200);
+        }, 300);
     </script>
     """, unsafe_allow_html=True)
 
@@ -24,7 +23,6 @@ if "keranjang" not in st.session_state:
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
-# formny
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
@@ -117,37 +115,6 @@ st.markdown("""
     .stButton > button:hover {
         background: #d43b1f !important;
     }
-    .cart-badge {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 999;
-        background: #ee4d2d;
-        color: white;
-        border: none;
-        border-radius: 50px;
-        padding: 15px 25px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: all 0.3s;
-    }
-    .cart-badge:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 30px rgba(238, 77, 45, 0.6);
-    }
-    .cart-badge .count {
-        background: white;
-        color: #ee4d2d;
-        border-radius: 50%;
-        padding: 2px 10px;
-        font-size: 14px;
-        font-weight: 700;
-    }
     .footer {
         text-align: center;
         padding: 20px 0 10px;
@@ -183,20 +150,21 @@ for i, p in enumerate(produk):
         if st.button(f"🛒 Tambahkan ke Keranjang", key=f"add_{p['id']}"):
             st.session_state.keranjang.append(p)
             st.session_state.show_cart = True
-            buka_keranjang()  
+            buka_keranjang()
             st.rerun()
 
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
+# button keranjang
 st.markdown(f"""
-<div class="cart-badge">
-    🛒 Keranjang
-    <span class="count">{total_item}</span>
+<div style="position:fixed; bottom:30px; right:30px; z-index:999; background:#ee4d2d; color:white; border-radius:50px; padding:12px 22px; font-size:16px; font-weight:700; box-shadow:0 4px 20px rgba(238,77,45,0.4); display:flex; align-items:center; gap:8px; cursor:pointer;" 
+     onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click()">
+    🛒 {total_item}
 </div>
 """, unsafe_allow_html=True)
 
-# cek show cartny
+# cek show cart
 if st.session_state.show_cart:
     st.markdown("""
     <script>
@@ -205,7 +173,7 @@ if st.session_state.show_cart:
             if (sidebarBtn) {
                 sidebarBtn.click();
             }
-        }, 200);
+        }, 300);
     </script>
     """, unsafe_allow_html=True)
 
@@ -234,7 +202,6 @@ with st.sidebar:
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
             
-            # input session stage
             nama_pemesan = st.text_input(
                 "Nama Lengkap", 
                 value=st.session_state.nama_pemesan,
@@ -289,13 +256,11 @@ with st.sidebar:
                             st.balloons()
                             st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                             
-                            # buat reser
                             st.session_state.keranjang = []
                             st.session_state.nama_pemesan = ""
                             st.session_state.kelas = ""
                             st.session_state.no_hp = ""
                             
-                            # ngerefresh halamanny
                             st.rerun()
                         else:
                             st.error("❌ Gagal kirim notif!")
