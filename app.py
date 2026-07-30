@@ -36,7 +36,7 @@ if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
 produk = [
-    {"id": 1, "nama": "67", "harga": 67, "gambar":"blob:https://web.whatsapp.com/04453ccd-c7d2-4a52-b9b7-533d761aae2b"},
+    {"id": 1, "nama": "67", "harga": 67, "gambar":"https://share.google/Cv5OAa8HW9ndwjUta"},
     {"id": 2, "nama": "67", "harga": 67},
     {"id": 3, "nama": "67", "harga": 67},
     {"id": 4, "nama": "67", "harga": 67},
