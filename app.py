@@ -155,7 +155,7 @@ cols = st.columns(3)
 
 for i, p in enumerate(produk):
     with cols[i % 3]:
-        emoji = ["👕", "🧥", "👖", "👟", "🎒", "⌚"][i]
+        emoji = ["1", "2", "3", "4", "5", "6"][i]
         
         st.markdown(f"""
         <div class="product-card">
