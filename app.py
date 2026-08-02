@@ -3,15 +3,6 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
-# ===== CEK HP =====
-def is_mobile():
-    try:
-        user_agent = st.context.headers.get("User-Agent", "")
-        mobile_keywords = ["Mobile", "Android", "iPhone", "iPad", "iPod", "BlackBerry", "Opera Mini", "IEMobile"]
-        return any(keyword in user_agent for keyword in mobile_keywords)
-    except:
-        return False
-
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
 NO_HP_KAMU = "81180895229"      
@@ -166,68 +157,6 @@ st.markdown("""
         margin-top: 30px;
         border-top: 1px solid #eee;
     }
-
-    @media only screen and (max-width: 768px) {
-        .header {
-            padding: 10px 15px !important;
-            flex-direction: column !important;
-            text-align: center !important;
-            gap: 5px !important;
-        }
-        .header h1 {
-            font-size: 18px !important;
-        }
-        .header .badge {
-            font-size: 11px !important;
-            padding: 4px 12px !important;
-        }
-        .cart-badge {
-            bottom: 15px !important;
-            right: 15px !important;
-            padding: 10px 18px !important;
-            font-size: 14px !important;
-        }
-        .cart-badge .count {
-            font-size: 12px !important;
-            padding: 1px 8px !important;
-        }
-        .footer {
-            font-size: 11px !important;
-        }
-    }
-
-    @media only screen and (max-width: 480px) {
-        .header h1 {
-            font-size: 16px !important;
-        }
-        .header .badge {
-            font-size: 10px !important;
-            padding: 3px 10px !important;
-        }
-        .product-card h3 {
-            font-size: 14px !important;
-        }
-        .product-card .harga {
-            font-size: 18px !important;
-        }
-        .stButton > button {
-            font-size: 14px !important;
-            padding: 10px !important;
-        }
-        .cart-badge {
-            bottom: 10px !important;
-            right: 10px !important;
-            padding: 8px 14px !important;
-            font-size: 12px !important;
-        }
-        .cart-badge .count {
-            font-size: 10px !important;
-            padding: 1px 6px !important;
-        }
-        .footer {
-            font-size: 10px !important;
-        }
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -238,12 +167,14 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ===== TENTUKAN JUMLAH KOLOM =====
-is_mobile_device = is_mobile()
-cols = st.columns(1 if is_mobile_device else 3)
+# ===== PAKSA JUMLAH KOLOM =====
+# 6 produk, kita bagi jadi 2 baris x 3 kolom
+# Pake 3 kolom biar rapi kayak laptop
+
+cols = st.columns(3)
 
 for i, p in enumerate(produk):
-    with cols[i % (1 if is_mobile_device else 3)]:
+    with cols[i % 3]:
         emoji = ["1", "2", "3", "4", "5", "6"][i]
         
         st.markdown(f"""
@@ -288,79 +219,154 @@ with st.sidebar:
                     st.rerun()
         
         st.markdown("---")
-        st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
+        st.markdown(f"### 💰 Total: **Rp{### 💰 Total: **Rp{total_harga:,}**")
+       total_harga:,}**")
         st.markdown("---")
         
-        with st.form("form_pesan"):
-            st.markdown("### 📝 Data Pemesan")
+        st.markdown("---")
+        
+        with st.form(" with st.form("form_pesan"):
+form_pesan"):
+            st.markdown            st.markdown("### 📝("### 📝 Data Pemesan Data Pemesan")
             
-            # input session stage
-            nama_pemesan = st.text_input(
+            #")
+            
+            # input session input session stage
+            nama stage
+            nama_pemesan_pemesan = st.text_input(
+                "Nama Lengkap = st.text_input(
                 "Nama Lengkap", 
-                value=st.session_state.nama_pemesan,
-                placeholder="Masukkan nama kamu",
-                key="input_nama"
+                value", 
+                value=st.session_state=st.session_state.nama_pemesan,
+                placeholder="Masukkan nama.nama_pemesan,
+                placeholder kamu",
+                key="input_n="Masukkan nama kamu",
+               ama"
+            )
+            kelas = st key="input_nama"
             )
             kelas = st.text_input(
-                "Kelas", 
-                value=st.session_state.kelas,
-                placeholder="Contoh: 10 IPA 1",
-                key="input_kelas"
+               .text_input(
+                "Kelas", "Kelas", 
+                value= 
+                value=st.session_state.kst.session_state.kelas,
+                placeholder="Contoh: 10 IPA elas,
+                placeholder="Contoh:1",
+                key="input_kelas 10 IPA 1",
+                key"
+            )
+           ="input_kelas"
             )
             no_hp = st.text_input(
+ no_hp =                "No. HP (WA)", st.text_input(
                 "No. HP (WA)", 
-                value=st.session_state.no_hp,
-                placeholder="Contoh: 08123456789",
-                key="input_nohp"
+                value= 
+                value=st.session_state.nost.session_state.no_hp,
+                placeholder="Contoh: 081234_hp,
+                placeholder="Contoh56789",
+                key="input_n: 08123456789",
+               ohp"
             )
             
-            submit = st.form_submit_button("✅ Kirim Pesanan", use_container_width=True)
+            submit key="input_nohp"
+            = st.form_submit_button("✅ )
+            
+            submit = st.form_sub Kirim Pesanan", use_container_widthmit_button("✅ Kirim Pesanan", use_container_width=True)
+            
+           =True)
             
             if submit:
-                if not nama_pemesan or not kelas or not no_hp:
-                    st.error("❌ Semua data harus diisi!")
-                elif len(st.session_state.keranjang) == 0:
-                    st.error("❌ Keranjang masih kosong!")
+                if submit:
+                if not nama_p if not nama_pemesan or notemesan or not kelas or not no_hp:
+                    st.error(" kelas or not no_hp:
+                    st.error("❌ Semua data❌ Semua data harus diisi!")
+ harus diisi!")
+                elif len(st                elif len(st.session_state.ker.session_state.keranjang) ==anjang) == 0:
+                    0:
+                    st.error(" st.error("❌ Keranjang❌ Keranjang masih kosong!")
+ masih kosong!")
                 else:
-                    detail_order = "\n".join([f"- {item['nama']} (Rp{item['harga']:,})" for item in st.session_state.keranjang])
+                    detail_order = "\n".join                else:
+                    detail_order = "\([f"- {item['nama']}n".join([f"- {item (Rp{item['harga']:,['nama']} (Rp{item['})" for item in st.session_stateharga']:,})" for item in st.session_state.keranjang])
+                    pes.keranjang])
                     pesan = f"""
-🛍️ *PESANAN BARU!*
+🛍️an = f"""
+🛍️ *PESAN *PESANAN BARU!AN BARU!*
+━━━━━━*
 ━━━━━━━━━━━━━━━━
-👤 Nama: {nama_pemesan}
-🏫 Kelas: {kelas}
+👤 Nama: {━━━━━━━━━━
+👤nama_pemesan}
+🏫 Nama: {nama_pemesan}
+🏫 Kelas: Kelas: {kelas}
+ {kelas}
 📱 No. HP: {no_hp}
-━━━━━━━━━━━━━━━━
-📦 *Detail Pesanan:*
+━━📱 No. HP: {no_h━━━━━━━━━━━━━━
+p}
+━━━━━━━━━━━━📦 *Detail Pesanan:*
+{━━━━
+📦 *Detail Pesdetail_order}
+━━━━━━━━anan:*
 {detail_order}
 ━━━━━━━━━━━━━━━━
-💰 *Total: Rp{total_harga:,}*
-━━━━━━━━━━━━━━━━
+━━━━━━━━
+💰 *Total:💰 *Total: Rp{total_h Rp{total_harga:,}*
+arga:,}*
+━━━━━━━━━━━━━━━━━━━━━━━━
                     """
                     
                     try:
                         
-                        kirim_wa(pesan)
+━━━━━━━━
+                    """
+                    
+                    try:
                         
-                        wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
-                        wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
+                        kirim_                        kirim_wa(pwa(pesan)
                         
-                        st.success(f"✅ Pesanan berhasil dikirim!")
-                        st.balloons()
-                        st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
+                        wa_textesan)
+                        
+                        wa_text = f = f"Halo {nama_p"Halo {nama_pememesan}, pesanan Anda sedang kami proses. Total Rp{total_hargaesan}, pesanan Anda sedang kami proses. Total Rp:,}"
+                        wa{total_harga:,}"
+                        wa_link =_link = f f"https://api.whats"https://api.whatsapp.com/send?phone={no_hp}&app.com/send?phone={no_hp}&text={wa_text.replace(' ',text={wa_text.replace(' ', '%20')}"
+                        
+                        st.success(f"✅ '%20')}"
+                        
+                        st Pesanan berhasil dikirim!")
+.success(f"✅ Pesanan ber                        st.balloons()
+                        sthasil dikirim!")
+                        st.ball.markdown(f"📱 [Koons()
+                        st.markdown(f"lik di sini untuk chat via📱 [Klik di sini WhatsApp]({wa_link})")
+ untuk chat via WhatsApp]({                        
+                        # buwa_link})")
                         
                         # buat reser
-                        st.session_state.keranjang = []
-                        st.session_state.nama_pemesan = ""
+                        st.sessionat reser
+                        st.session_state.keranj_state.keranjang = []
+                       ang = []
+                        st.session_state st.session_state.nama_pemesan.nama_pemesan = ""
                         st.session_state.kelas = ""
-                        st.session_state.no_hp = ""
+                        st = ""
+                        st.session_state.kelas.session_state.no_hp = = ""
+                        st.session_state.no_h ""
+                        
+                        # ngerefresh hp = ""
                         
                         # ngerefresh halamanny
+                        st.ralamanny
                         st.rerun()
-                    except Exception as e:
-                        st.error(f"❌ Error: {e}")
+                   erun()
+                    except Exception as e except Exception as e:
+                        st.error:
+                        st.error(f"❌(f"❌ Error: {e Error: {e}")
 
-st.markdown("""
+st.mark}")
+
+st.markdowndown("""
+<div class="footer("""
 <div class="footer">
     Social 9D
 </div>
-""", unsafe_allow_html=True)
+""", unsafe">
+    Social 9D
+</div>
+""", unsafe_allow_allow_html=True)
