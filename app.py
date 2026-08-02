@@ -35,13 +35,14 @@ if "kelas" not in st.session_state:
 if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
+# ===== PRODUK PAKE UNSPLASH (PASTI MUNCUL!) =====
 produk = [
-    {"id": 1, "nama": "Dubai", "harga": 67000, "gambar": "https://github.com/richartzosimolai-create/social/blob/main/dubai.jpeg"},
-    {"id": 2, "nama": "Produk 2", "harga": 75000, "gambar": ""},
-    {"id": 3, "nama": "Produk 3", "harga": 80000, "gambar": ""},
-    {"id": 4, "nama": "Produk 4", "harga": 90000, "gambar": ""},
-    {"id": 5, "nama": "Produk 5", "harga": 100000, "gambar": ""},
-    {"id": 6, "nama": "Produk 6", "harga": 120000, "gambar": ""},
+    {"id": 1, "nama": "Kaos Polos", "harga": 75000, "gambar": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=300"},
+    {"id": 2, "nama": "Jaket Hoodie", "harga": 150000, "gambar": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300"},
+    {"id": 3, "nama": "Celana Chino", "harga": 120000, "gambar": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300"},
+    {"id": 4, "nama": "Sepatu Sneakers", "harga": 250000, "gambar": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300"},
+    {"id": 5, "nama": "Tas Ransel", "harga": 180000, "gambar": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300"},
+    {"id": 6, "nama": "Jam Tangan", "harga": 200000, "gambar": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300"},
 ]
 
 st.markdown("""
@@ -170,7 +171,7 @@ cols = st.columns(3)
 
 for i, p in enumerate(produk):
     with cols[i % 3]:
-        # TAMPILKAN GAMBAR (PAKE HTML + CSS ASPECT-RATIO BIAR GA GEPENG)
+        # TAMPILKAN GAMBAR (PAKE HTML + CSS ASPECT-RATIO)
         if "gambar" in p and p["gambar"]:
             st.markdown(f"""
             <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
@@ -228,7 +229,6 @@ with st.sidebar:
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
             
-            # input session stage
             nama_pemesan = st.text_input(
                 "Nama Lengkap", 
                 value=st.session_state.nama_pemesan,
@@ -272,7 +272,6 @@ with st.sidebar:
                     """
                     
                     try:
-                        
                         kirim_wa(pesan)
                         
                         wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
@@ -282,13 +281,11 @@ with st.sidebar:
                         st.balloons()
                         st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                         
-                        # buat reser
                         st.session_state.keranjang = []
                         st.session_state.nama_pemesan = ""
                         st.session_state.kelas = ""
                         st.session_state.no_hp = ""
                         
-                        # ngerefresh halamanny
                         st.rerun()
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
