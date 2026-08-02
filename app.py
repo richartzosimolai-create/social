@@ -58,6 +58,7 @@ st.markdown("""
         position: sticky;
         top: 0;
         z-index: 100;
+        flex-wrap: wrap;
     }
     .header h1 {
         font-size: 24px;
@@ -157,66 +158,69 @@ st.markdown("""
         border-top: 1px solid #eee;
     }
 
-    /* kontrol size buat di hp */
+    /* ======================================== */
+    /* ===== RESPONSIVE HP (PAKSA!) ===== */
+    /* ======================================== */
+
     @media only screen and (max-width: 768px) {
         .header {
-            padding: 10px 15px;
-            flex-direction: column;
-            text-align: center;
-            gap: 5px;
+            padding: 10px 15px !important;
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 5px !important;
         }
         .header h1 {
-            font-size: 18px;
+            font-size: 18px !important;
         }
         .header .badge {
-            font-size: 11px;
-            padding: 4px 12px;
+            font-size: 11px !important;
+            padding: 4px 12px !important;
         }
         .cart-badge {
-            bottom: 15px;
-            right: 15px;
-            padding: 10px 18px;
-            font-size: 14px;
+            bottom: 15px !important;
+            right: 15px !important;
+            padding: 10px 18px !important;
+            font-size: 14px !important;
         }
         .cart-badge .count {
-            font-size: 12px;
-            padding: 1px 8px;
+            font-size: 12px !important;
+            padding: 1px 8px !important;
         }
         .footer {
-            font-size: 11px;
+            font-size: 11px !important;
         }
     }
 
     @media only screen and (max-width: 480px) {
         .header h1 {
-            font-size: 16px;
+            font-size: 16px !important;
         }
         .header .badge {
-            font-size: 10px;
-            padding: 3px 10px;
+            font-size: 10px !important;
+            padding: 3px 10px !important;
         }
         .product-card h3 {
-            font-size: 14px;
+            font-size: 14px !important;
         }
         .product-card .harga {
-            font-size: 18px;
+            font-size: 18px !important;
         }
         .stButton > button {
             font-size: 14px !important;
             padding: 10px !important;
         }
         .cart-badge {
-            bottom: 10px;
-            right: 10px;
-            padding: 8px 14px;
-            font-size: 12px;
+            bottom: 10px !important;
+            right: 10px !important;
+            padding: 8px 14px !important;
+            font-size: 12px !important;
         }
         .cart-badge .count {
-            font-size: 10px;
-            padding: 1px 6px;
+            font-size: 10px !important;
+            padding: 1px 6px !important;
         }
         .footer {
-            font-size: 10px;
+            font-size: 10px !important;
         }
     }
 </style>
