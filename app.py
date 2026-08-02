@@ -58,7 +58,6 @@ st.markdown("""
         position: sticky;
         top: 0;
         z-index: 100;
-        flex-wrap: wrap;
     }
     .header h1 {
         font-size: 24px;
@@ -218,7 +217,6 @@ with st.sidebar:
         st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
         st.markdown("---")
         
-        # ===== INI YANG DIPERBAIKI =====
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
             
