@@ -35,7 +35,7 @@ if "kelas" not in st.session_state:
 if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
-# ===== PRODUK PAKE UNSPLASH (PASTI MUNCUL!) =====
+# ===== PRODUK =====
 produk = [
     {"id": 1, "nama": "Kaos Polos", "harga": 75000, "gambar": "https://ibb.co.com/0jbb9hCp"},
     {"id": 2, "nama": "Jaket Hoodie", "harga": 150000, "gambar": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300"},
@@ -171,13 +171,9 @@ cols = st.columns(3)
 
 for i, p in enumerate(produk):
     with cols[i % 3]:
-        # TAMPILKAN GAMBAR (PAKE HTML + CSS ASPECT-RATIO)
+        # TAMPILKAN GAMBAR PAKE ST.IMAGE
         if "gambar" in p and p["gambar"]:
-            st.markdown(f"""
-            <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
-                <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
-            </div>
-            """, unsafe_allow_html=True)
+            st.image(p["gambar"], width=200)
         else:
             emoji = ["1", "2", "3", "4", "5", "6"][i]
             st.markdown(f'<div class="gambar">{emoji}</div>', unsafe_allow_html=True)
