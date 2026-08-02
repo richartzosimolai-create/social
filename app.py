@@ -36,12 +36,12 @@ if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
 produk = [
-    {"id": 1, "nama": "67", "harga": 67},
-    {"id": 2, "nama": "67", "harga": 67},
-    {"id": 3, "nama": "67", "harga": 67},
-    {"id": 4, "nama": "67", "harga": 67},
-    {"id": 5, "nama": "67", "harga": 67},
-    {"id": 6, "nama": "67", "harga": 67},
+    {"id": 1, "nama": "Dubai", "harga": 67000, "gambar": "https://github.com/richartzosimolai-create/social/blob/main/dubai.jpeg"},
+    {"id": 2, "nama": "Produk 2", "harga": 75000, "gambar": ""},
+    {"id": 3, "nama": "Produk 3", "harga": 80000, "gambar": ""},
+    {"id": 4, "nama": "Produk 4", "harga": 90000, "gambar": ""},
+    {"id": 5, "nama": "Produk 5", "harga": 100000, "gambar": ""},
+    {"id": 6, "nama": "Produk 6", "harga": 120000, "gambar": ""},
 ]
 
 st.markdown("""
@@ -170,11 +170,16 @@ cols = st.columns(3)
 
 for i, p in enumerate(produk):
     with cols[i % 3]:
-        emoji = ["1", "2", "3", "4", "5", "6"][i]
+        # TAMPILKAN GAMBAR SESUAI PRODUK
+        if "gambar" in p and p["gambar"]:
+            st.image(p["gambar"], use_container_width=True)
+        else:
+            # KALO GA ADA GAMBAR, PAKAI EMOJI
+            emoji = ["1", "2", "3", "4", "5", "6"][i]
+            st.markdown(f'<div class="gambar">{emoji}</div>', unsafe_allow_html=True)
         
         st.markdown(f"""
         <div class="product-card">
-            <div class="gambar">{emoji}</div>
             <h3>{p['nama']}</h3>
             <p class="harga">Rp{p['harga']:,}</p>
         </div>
