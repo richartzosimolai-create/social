@@ -35,14 +35,13 @@ if "kelas" not in st.session_state:
 if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
-# ===== PRODUK PAKE UNSPLASH =====
 produk = [
-    {"id": 1, "nama": "Kaos Polos", "harga": 75000, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
-    {"id": 2, "nama": "Jaket Hoodie", "harga": 150000, "gambar": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300"},
-    {"id": 3, "nama": "Celana Chino", "harga": 120000, "gambar": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300"},
-    {"id": 4, "nama": "Sepatu Sneakers", "harga": 250000, "gambar": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300"},
-    {"id": 5, "nama": "Tas Ransel", "harga": 180000, "gambar": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300"},
-    {"id": 6, "nama": "Jam Tangan", "harga": 200000, "gambar": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300"},
+    {"id": 1, "nama": "Dubai Chewy cookie strawberry", "harga": 67, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
+    {"id": 2, "nama": "67", "harga": 67, "gambar": ""},
+    {"id": 3, "nama": "67", "harga": 67, "gambar": ""},
+    {"id": 4, "nama": "67", "harga": 67, "gambar": ""},
+    {"id": 5, "nama": "67", "harga": 67, "gambar": ""},
+    {"id": 6, "nama": "67", "harga": 67, "gambar": ""},
 ]
 
 st.markdown("""
