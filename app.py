@@ -3,6 +3,15 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
+# ===== CEK HP =====
+def is_mobile():
+    try:
+        user_agent = st.context.headers.get("User-Agent", "")
+        mobile_keywords = ["Mobile", "Android", "iPhone", "iPad", "iPod", "BlackBerry", "Opera Mini", "IEMobile"]
+        return any(keyword in user_agent for keyword in mobile_keywords)
+    except:
+        return False
+
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
 NO_HP_KAMU = "81180895229"      
@@ -158,10 +167,6 @@ st.markdown("""
         border-top: 1px solid #eee;
     }
 
-    /* ======================================== */
-    /* ===== RESPONSIVE HP (PAKSA!) ===== */
-    /* ======================================== */
-
     @media only screen and (max-width: 768px) {
         .header {
             padding: 10px 15px !important;
@@ -233,10 +238,12 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-cols = st.columns(3)
+# ===== TENTUKAN JUMLAH KOLOM =====
+is_mobile_device = is_mobile()
+cols = st.columns(1 if is_mobile_device else 3)
 
 for i, p in enumerate(produk):
-    with cols[i % 3]:
+    with cols[i % (1 if is_mobile_device else 3)]:
         emoji = ["1", "2", "3", "4", "5", "6"][i]
         
         st.markdown(f"""
