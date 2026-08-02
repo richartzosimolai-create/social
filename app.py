@@ -37,7 +37,7 @@ if "no_hp" not in st.session_state:
 
 # ===== PRODUK PAKE UNSPLASH (PASTI MUNCUL!) =====
 produk = [
-    {"id": 1, "nama": "Kaos Polos", "harga": 75000, "gambar": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=300"},
+    {"id": 1, "nama": "Kaos Polos", "harga": 75000, "gambar": "https://github.com/richartzosimolai-create/social/blob/main/dubai.jpeg"},
     {"id": 2, "nama": "Jaket Hoodie", "harga": 150000, "gambar": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300"},
     {"id": 3, "nama": "Celana Chino", "harga": 120000, "gambar": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300"},
     {"id": 4, "nama": "Sepatu Sneakers", "harga": 250000, "gambar": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300"},
