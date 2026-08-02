@@ -35,7 +35,7 @@ if "kelas" not in st.session_state:
 if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
-# ===== PRODUK PAKE UNSPLASH (PASTI MUNCUL!) =====
+# ===== PRODUK PAKE UNSPLASH =====
 produk = [
     {"id": 1, "nama": "Kaos Polos", "harga": 75000, "gambar": "https://ibb.co.com/0jbb9hCp"},
     {"id": 2, "nama": "Jaket Hoodie", "harga": 150000, "gambar": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300"},
