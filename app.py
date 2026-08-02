@@ -167,10 +167,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ===== PAKSA JUMLAH KOLOM =====
-# 6 produk, kita bagi jadi 2 baris x 3 kolom
-# Pake 3 kolom biar rapi kayak laptop
-
 cols = st.columns(3)
 
 for i, p in enumerate(produk):
@@ -219,154 +215,80 @@ with st.sidebar:
                     st.rerun()
         
         st.markdown("---")
-        st.markdown(f"### 💰 Total: **Rp{### 💰 Total: **Rp{total_harga:,}**")
-       total_harga:,}**")
+        st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
         st.markdown("---")
         
-        st.markdown("---")
-        
-        with st.form(" with st.form("form_pesan"):
-form_pesan"):
-            st.markdown            st.markdown("### 📝("### 📝 Data Pemesan Data Pemesan")
+        # ===== INI YANG DIPERBAIKI =====
+        with st.form("form_pesan"):
+            st.markdown("### 📝 Data Pemesan")
             
-            #")
-            
-            # input session input session stage
-            nama stage
-            nama_pemesan_pemesan = st.text_input(
-                "Nama Lengkap = st.text_input(
+            # input session stage
+            nama_pemesan = st.text_input(
                 "Nama Lengkap", 
-                value", 
-                value=st.session_state=st.session_state.nama_pemesan,
-                placeholder="Masukkan nama.nama_pemesan,
-                placeholder kamu",
-                key="input_n="Masukkan nama kamu",
-               ama"
-            )
-            kelas = st key="input_nama"
+                value=st.session_state.nama_pemesan,
+                placeholder="Masukkan nama kamu",
+                key="input_nama"
             )
             kelas = st.text_input(
-               .text_input(
-                "Kelas", "Kelas", 
-                value= 
-                value=st.session_state.kst.session_state.kelas,
-                placeholder="Contoh: 10 IPA elas,
-                placeholder="Contoh:1",
-                key="input_kelas 10 IPA 1",
-                key"
-            )
-           ="input_kelas"
+                "Kelas", 
+                value=st.session_state.kelas,
+                placeholder="Contoh: 10 IPA 1",
+                key="input_kelas"
             )
             no_hp = st.text_input(
- no_hp =                "No. HP (WA)", st.text_input(
                 "No. HP (WA)", 
-                value= 
-                value=st.session_state.nost.session_state.no_hp,
-                placeholder="Contoh: 081234_hp,
-                placeholder="Contoh56789",
-                key="input_n: 08123456789",
-               ohp"
+                value=st.session_state.no_hp,
+                placeholder="Contoh: 08123456789",
+                key="input_nohp"
             )
             
-            submit key="input_nohp"
-            = st.form_submit_button("✅ )
-            
-            submit = st.form_sub Kirim Pesanan", use_container_widthmit_button("✅ Kirim Pesanan", use_container_width=True)
-            
-           =True)
+            submit = st.form_submit_button("✅ Kirim Pesanan", use_container_width=True)
             
             if submit:
-                if submit:
-                if not nama_p if not nama_pemesan or notemesan or not kelas or not no_hp:
-                    st.error(" kelas or not no_hp:
-                    st.error("❌ Semua data❌ Semua data harus diisi!")
- harus diisi!")
-                elif len(st                elif len(st.session_state.ker.session_state.keranjang) ==anjang) == 0:
-                    0:
-                    st.error(" st.error("❌ Keranjang❌ Keranjang masih kosong!")
- masih kosong!")
+                if not nama_pemesan or not kelas or not no_hp:
+                    st.error("❌ Semua data harus diisi!")
+                elif len(st.session_state.keranjang) == 0:
+                    st.error("❌ Keranjang masih kosong!")
                 else:
-                    detail_order = "\n".join                else:
-                    detail_order = "\([f"- {item['nama']}n".join([f"- {item (Rp{item['harga']:,['nama']} (Rp{item['})" for item in st.session_stateharga']:,})" for item in st.session_state.keranjang])
-                    pes.keranjang])
+                    detail_order = "\n".join([f"- {item['nama']} (Rp{item['harga']:,})" for item in st.session_state.keranjang])
                     pesan = f"""
-🛍️an = f"""
-🛍️ *PESAN *PESANAN BARU!AN BARU!*
-━━━━━━*
+🛍️ *PESANAN BARU!*
 ━━━━━━━━━━━━━━━━
-👤 Nama: {━━━━━━━━━━
-👤nama_pemesan}
-🏫 Nama: {nama_pemesan}
-🏫 Kelas: Kelas: {kelas}
- {kelas}
+👤 Nama: {nama_pemesan}
+🏫 Kelas: {kelas}
 📱 No. HP: {no_hp}
-━━📱 No. HP: {no_h━━━━━━━━━━━━━━
-p}
-━━━━━━━━━━━━📦 *Detail Pesanan:*
-{━━━━
-📦 *Detail Pesdetail_order}
-━━━━━━━━anan:*
+━━━━━━━━━━━━━━━━
+📦 *Detail Pesanan:*
 {detail_order}
 ━━━━━━━━━━━━━━━━
-━━━━━━━━
-💰 *Total:💰 *Total: Rp{total_h Rp{total_harga:,}*
-arga:,}*
-━━━━━━━━━━━━━━━━━━━━━━━━
+💰 *Total: Rp{total_harga:,}*
+━━━━━━━━━━━━━━━━
                     """
                     
                     try:
                         
-━━━━━━━━
-                    """
-                    
-                    try:
+                        kirim_wa(pesan)
                         
-                        kirim_                        kirim_wa(pwa(pesan)
+                        wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
+                        wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
                         
-                        wa_textesan)
-                        
-                        wa_text = f = f"Halo {nama_p"Halo {nama_pememesan}, pesanan Anda sedang kami proses. Total Rp{total_hargaesan}, pesanan Anda sedang kami proses. Total Rp:,}"
-                        wa{total_harga:,}"
-                        wa_link =_link = f f"https://api.whats"https://api.whatsapp.com/send?phone={no_hp}&app.com/send?phone={no_hp}&text={wa_text.replace(' ',text={wa_text.replace(' ', '%20')}"
-                        
-                        st.success(f"✅ '%20')}"
-                        
-                        st Pesanan berhasil dikirim!")
-.success(f"✅ Pesanan ber                        st.balloons()
-                        sthasil dikirim!")
-                        st.ball.markdown(f"📱 [Koons()
-                        st.markdown(f"lik di sini untuk chat via📱 [Klik di sini WhatsApp]({wa_link})")
- untuk chat via WhatsApp]({                        
-                        # buwa_link})")
+                        st.success(f"✅ Pesanan berhasil dikirim!")
+                        st.balloons()
+                        st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                         
                         # buat reser
-                        st.sessionat reser
-                        st.session_state.keranj_state.keranjang = []
-                       ang = []
-                        st.session_state st.session_state.nama_pemesan.nama_pemesan = ""
+                        st.session_state.keranjang = []
+                        st.session_state.nama_pemesan = ""
                         st.session_state.kelas = ""
-                        st = ""
-                        st.session_state.kelas.session_state.no_hp = = ""
-                        st.session_state.no_h ""
-                        
-                        # ngerefresh hp = ""
+                        st.session_state.no_hp = ""
                         
                         # ngerefresh halamanny
-                        st.ralamanny
                         st.rerun()
-                   erun()
-                    except Exception as e except Exception as e:
-                        st.error:
-                        st.error(f"❌(f"❌ Error: {e Error: {e}")
+                    except Exception as e:
+                        st.error(f"❌ Error: {e}")
 
-st.mark}")
-
-st.markdowndown("""
-<div class="footer("""
+st.markdown("""
 <div class="footer">
     Social 9D
 </div>
-""", unsafe">
-    Social 9D
-</div>
-""", unsafe_allow_allow_html=True)
+""", unsafe_allow_html=True)
