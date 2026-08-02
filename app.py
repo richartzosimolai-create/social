@@ -156,6 +156,69 @@ st.markdown("""
         margin-top: 30px;
         border-top: 1px solid #eee;
     }
+
+    /* kontrol size buat di hp */
+    @media only screen and (max-width: 768px) {
+        .header {
+            padding: 10px 15px;
+            flex-direction: column;
+            text-align: center;
+            gap: 5px;
+        }
+        .header h1 {
+            font-size: 18px;
+        }
+        .header .badge {
+            font-size: 11px;
+            padding: 4px 12px;
+        }
+        .cart-badge {
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+        .cart-badge .count {
+            font-size: 12px;
+            padding: 1px 8px;
+        }
+        .footer {
+            font-size: 11px;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .header h1 {
+            font-size: 16px;
+        }
+        .header .badge {
+            font-size: 10px;
+            padding: 3px 10px;
+        }
+        .product-card h3 {
+            font-size: 14px;
+        }
+        .product-card .harga {
+            font-size: 18px;
+        }
+        .stButton > button {
+            font-size: 14px !important;
+            padding: 10px !important;
+        }
+        .cart-badge {
+            bottom: 10px;
+            right: 10px;
+            padding: 8px 14px;
+            font-size: 12px;
+        }
+        .cart-badge .count {
+            font-size: 10px;
+            padding: 1px 6px;
+        }
+        .footer {
+            font-size: 10px;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
