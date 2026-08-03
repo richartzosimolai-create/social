@@ -201,9 +201,6 @@ st.markdown(f"""
     🛒 Keranjang
     <span class="count">{total_item}</span>
 </div>
-<div style="position:fixed; bottom:80px; right:30px; z-index:999; background:white; color:#666; padding:4px 12px; border-radius:20px; font-size:11px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-    👆 klik untuk mengecek keranjang
-</div>
 """, unsafe_allow_html=True)
 
 with st.sidebar:
