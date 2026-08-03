@@ -3,10 +3,6 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
-# ===== CEK STATUS SIDEBAR =====
-if "show_cart" not in st.session_state:
-    st.session_state.show_cart = False
-
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
 NO_HP_KAMU = "81180895229"      
@@ -28,6 +24,10 @@ def kirim_wa(pesan):
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
 
+if "show_cart" not in st.session_state:
+    st.session_state.show_cart = False
+
+# formny
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
@@ -196,33 +196,12 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
-# ===== TOMBOL KERANJANG + TEKS DINAMIS =====
-if st.session_state.show_cart:
-    # KALO TERBUKA: HANYA TOMBOL OREN
-    st.markdown(f"""
-    <div style="position:fixed; bottom:30px; right:30px; z-index:999;">
-        <div class="cart-badge" style="margin:0; cursor:pointer;" 
-             onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();">
-            🛒 Keranjang
-            <span class="count">{total_item}</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    # KALO TERTUTUP: TOMBOL OREN + TEKS "☰ Buka keranjang"
-    st.markdown(f"""
-    <div style="position:fixed; bottom:30px; right:30px; z-index:999; display:flex; align-items:center; gap:10px;">
-        <div style="background:white; color:#ee4d2d; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; box-shadow:0 2px 10px rgba(0,0,0,0.1); cursor:pointer;" 
-             onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();">
-            ☰ Buka keranjang
-        </div>
-        <div class="cart-badge" style="margin:0; position:relative; bottom:auto; right:auto; cursor:pointer;" 
-             onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();">
-            🛒 Keranjang
-            <span class="count">{total_item}</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown(f"""
+<div class="cart-badge">
+    🛒 Keranjang
+    <span class="count">{total_item}</span>
+</div>
+""", unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown("## 🛒 Keranjang Belanja")
