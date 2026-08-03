@@ -7,6 +7,38 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
+# ===== TEKS DI SAMPING TOMBOL PANAH SIDEBAR =====
+if st.session_state.show_cart:
+    # KALO KERANJANG TERBUKA: TEKS HILANG
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] button::after {
+            content: "" !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    # KALO KERANJANG TERTUTUP: TEKS MUNCUL DI SAMPING TOMBOL PANAH
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] button {
+            position: relative;
+        }
+        [data-testid="stSidebar"] button::after {
+            content: " 👈 Buka keranjang";
+            font-size: 13px;
+            color: #ee4d2d;
+            font-weight: 600;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
 # ===== TEKS DI SAMPING TOMBOL PANAH SIDEBAR (☰) =====
 if st.session_state.show_cart:
     # KALO KERANJANG TERBUKA: TEKS HILANG
