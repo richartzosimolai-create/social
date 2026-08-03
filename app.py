@@ -292,7 +292,7 @@ with st.sidebar:
 st.markdown(f"""
 <div class="footer">
     <a href="https://wa.me/{81180895229}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
-        Jika ada pertanyaan bisa langsung chat kita
+        Jika ada pertanyaan bisa langsung di klik dan ngechat kita
     </a>
 </div>
 """, unsafe_allow_html=True)
