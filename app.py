@@ -36,12 +36,12 @@ if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
 produk = [
-    {"id": 1, "nama": "Dubai Chewy cookie strawberry", "harga": 67, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
-    {"id": 2, "nama": "Chilis", "harga": 67, "gambar": "https://i.ibb.co.com/GvvnbcHn/Whats-App-Image-2026-08-02-at-19-03-45.jpg"},
-    {"id": 3, "nama": "Samyang roll moza", "harga": 67, "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"},
-    {"id": 4, "nama": "Scoopable cookies", "harga": 67, "gambar": "https://i.ibb.co.com/BVBH8p65/Whats-App-Image-2026-08-02-at-19-03-46.jpg"},
-    {"id": 5, "nama": "67", "harga": 67, "gambar": ""},
-    {"id": 6, "nama": "67", "harga": 67, "gambar": ""},
+    {"id": 1, "nama": "Dubai Chewy cookie strawberry", "harga": 67000, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
+    {"id": 2, "nama": "Chilis", "harga": 67000, "gambar": "https://i.ibb.co.com/GvvnbcHn/Whats-App-Image-2026-08-02-at-19-03-45.jpg"},
+    {"id": 3, "nama": "Samyang roll moza", "harga": 67000, "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"},
+    {"id": 4, "nama": "Scoopable cookies", "harga": 67000, "gambar": "https://i.ibb.co.com/BVBH8p65/Whats-App-Image-2026-08-02-at-19-03-46.jpg"},
+    {"id": 5, "nama": "Produk 5", "harga": 67000, "gambar": ""},
+    {"id": 6, "nama": "Produk 6", "harga": 67000, "gambar": ""},
 ]
 
 st.markdown("""
@@ -196,12 +196,14 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
+# ===== TOMBOL KERANJANG + TEKS (BISA DIKLIK LANGSUNG BUKA SIDEBAR) =====
 st.markdown(f"""
-<div class="cart-badge">
+<div class="cart-badge" onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click()">
     🛒 Keranjang
     <span class="count">{total_item}</span>
 </div>
-<div style="position:fixed; bottom:80px; right:30px; z-index:999; background:white; color:#666; padding:4px 12px; border-radius:20px; font-size:11px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+<div style="position:fixed; bottom:80px; right:30px; z-index:999; background:white; color:#666; padding:4px 12px; border-radius:20px; font-size:11px; box-shadow:0 2px 8px rgba(0,0,0,0.1); cursor:pointer;" 
+     onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click()">
     👆 klik untuk mengecek keranjang
 </div>
 """, unsafe_allow_html=True)
