@@ -289,8 +289,10 @@ with st.sidebar:
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
 
-st.markdown("""
+st.markdown(f"""
 <div class="footer">
-    Social 9D
+    <a href="https://wa.me/{81180895229}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
+        Jika ada pertanyaan bisa langsung chat kita
+    </a>
 </div>
 """, unsafe_allow_html=True)
