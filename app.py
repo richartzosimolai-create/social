@@ -3,26 +3,9 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
-# ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
-st.markdown("""
-<style>
-    [data-testid="stSidebar"] button {
-        position: relative;
-    }
-    [data-testid="stSidebar"] button::after {
-        content: " 👈 Klik buka keranjang";
-        font-size: 14px;
-        color: #ee4d2d;
-        font-weight: 600;
-        background: white;
-        padding: 4px 12px;
-        border-radius: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin-left: 10px;
-        white-space: nowrap;
-    }
-</style>
-""", unsafe_allow_html=True)
+# ===== CEK STATUS SIDEBAR =====
+if "show_cart" not in st.session_state:
+    st.session_state.show_cart = False
 
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
@@ -45,10 +28,6 @@ def kirim_wa(pesan):
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
 
-if "show_cart" not in st.session_state:
-    st.session_state.show_cart = False
-
-# formny
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
@@ -217,9 +196,9 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
-# ===== TEKS HANYA MUNCUL KALO KERANJANG TERTUTUP =====
+# ===== TOMBOL KERANJANG + TEKS DINAMIS =====
 if st.session_state.show_cart:
-    # KALO TERBUKA, GA MUNCUL TEKS
+    # KALO TERBUKA: HANYA TOMBOL OREN
     st.markdown(f"""
     <div style="position:fixed; bottom:30px; right:30px; z-index:999;">
         <div class="cart-badge" style="margin:0; cursor:pointer;" 
@@ -230,7 +209,7 @@ if st.session_state.show_cart:
     </div>
     """, unsafe_allow_html=True)
 else:
-    # KALO TERTUTUP, MUNCUL TEKS "☰ Buka keranjang"
+    # KALO TERTUTUP: TOMBOL OREN + TEKS "☰ Buka keranjang"
     st.markdown(f"""
     <div style="position:fixed; bottom:30px; right:30px; z-index:999; display:flex; align-items:center; gap:10px;">
         <div style="background:white; color:#ee4d2d; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; box-shadow:0 2px 10px rgba(0,0,0,0.1); cursor:pointer;" 
