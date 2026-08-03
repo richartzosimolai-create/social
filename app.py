@@ -290,9 +290,9 @@ with st.sidebar:
                         st.error(f"❌ Error: {e}")
 
 st.markdown(f"""
-<div class="footer">
+<div class="footer">Jika ada pertanyaan bisa langsung di klik dan ngechat kita
     <a href="https://wa.me/{81180895229}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
-        Jika ada pertanyaan bisa langsung di klik dan ngechat kita
+       bisa diklik
     </a>
 </div>
 """, unsafe_allow_html=True)
