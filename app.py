@@ -93,7 +93,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ===== PRODUK =====
 cols = st.columns(3)
 
 for i, p in enumerate(produk):
@@ -119,7 +118,6 @@ for i, p in enumerate(produk):
             st.session_state.keranjang.append(p)
             st.rerun()
 
-# ===== KERANJANG DI HALAMAN UTAMA =====
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
@@ -144,7 +142,7 @@ else:
     st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
     st.markdown("---")
     
-    # ===== FORM PEMESANAN =====
+    
     with st.form("form_pesan_main"):
         st.markdown("### 📝 Data Pemesan")
         nama_pemesan = st.text_input("Nama Lengkap", value=st.session_state.nama_pemesan, key="main_nama")
