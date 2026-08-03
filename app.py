@@ -217,72 +217,156 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
-# ===== TOMBOL KERANJANG + TEKS DI SAMPING =====
-st.markdown(f"""
-<div style="position:fixed; bottom:30px; right:30px; z-index:999; display:flex; align-items:center; gap:10px;">
-    <div style="background:white; color:#ee4d2d; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
-        👆 Klik keranjang
+# ===== TEKS HANYA MUNCUL KALO KERANJANG TERTUTUP =====
+if st.session_state.show_cart:
+    # KALO TERBUKA, GA MUNCUL TEKS
+    st.markdown(f"""
+    <div style="position:fixed; bottom:30px; right:30px; z-index:999;">
+        <div class="cart-badge" style="margin:0; cursor:pointer;" 
+             onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();">
+            🛒 Keranjang
+            <span class="count">{total_item}</span>
+        </div>
     </div>
-    <div class="cart-badge" style="margin:0; position:relative; bottom:auto; right:auto;">
-        🛒 Keranjang
-        <span class="count">{total_item}</span>
+    """, unsafe_allow_html=True)
+else:
+    # KALO TERTUTUP, MUNCUL TEKS "☰ Buka keranjang"
+    st.markdown(f"""
+    <div style="position:fixed; bottom:30px; right:30px; z-index:999; display:flex; align-items:center; gap:10px;">
+        <div style="background:white; color:#ee4d2d; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; box-shadow:0 2px 10px rgba(0,0,0,0.1); cursor:pointer;" 
+             onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();\\"] button')?.click();">
+            ☰ Buka keranj">
+            ☰ Buka keranjang
+        </div>
+       ang
+        </div>
+        <div class="cart-badge" style <div class="cart-badge" style="margin:0; position:relative; bottom:auto; right:auto="margin:0; position:relative; bottom:auto; right:auto; cursor:pointer;" 
+            ; cursor:pointer;" 
+             onclick="document.querySelector('[data-testid onclick="document.querySelector('[data-testid=\\"stSidebar\\"]=\\"stSidebar\\"] button')?.click();">
+            button')?.click(); 🛒 Keranjang
+           ">
+            🛒 Keranjang
+            <span class="count <span class="count">{total_item}</">{total_item}</span>
+        </span>
+        </div>
     </div>
-</div>
-""", unsafe_allow_html=True)
+    </div>
+    ""div>
+    """, unsafe_allow_html=True)
+
+with st.sidebar", unsafe_allow_html=True)
 
 with st.sidebar:
-    st.markdown("## 🛒 Keranjang Belanja")
+    st.markdown("## 🛒 Keranj:
+    st.markdown("## 🛒 Keranjang Belanang Belanja")
     st.markdown("---")
     
-    if len(st.session_state.keranjang) == 0:
-        st.info("🛍️ Keranjang masih kosong")
+    ifja")
+    st.markdown("---")
+    
+    if len(st.session len(st.session_state.keranjang) == 0:
+        st_state.keranjang) == 0:
+        st.info(".info("🛍️ Keranj🛍️ Keranjang masih kosongang masih kosong")
     else:
         for idx, item in enumerate(st.session_state.keranjang):
-            col1, col2, col3 = st.columns([2, 1, 0.5])
+           ")
+    else:
+        for idx, item in enumerate(st.session_state.keranjang):
+            col1, col col1, col2, col32, col3 = st.columns([2, 1 = st.columns([2, 1, 0.5])
+            with col1:
+                st.write(f", 0.5])
             with col1:
                 st.write(f"**{item['nama']}**")
             with col2:
+                st**{item['nama']}**")
+            with col2:
                 st.write(f"Rp{item['harga']:,}")
             with col3:
-                if st.button("✕", key=f"del_{idx}"):
+                if st.button("✕.write(f"Rp{item['harga']:,}")
+            with col3:
+                if st.button("✕", key=f"del_{idx", key=f"del_{idx}"):
+                    st.session_state.ker}"):
                     st.session_state.keranjang.pop(idx)
+                    st.ranjang.pop(idx)
                     st.rerun()
         
+        st.markdownerun()
+        
         st.markdown("---")
-        st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
+        st.markdown(f("---")
+        st.markdown(f"### 💰 Total: **Rp"### 💰 Total: **Rp{total_harga:,}**")
+        st.markdown("---")
+{total_harga:,}**")
         st.markdown("---")
         
+        
         with st.form("form_pesan"):
+            st.markdown("###        with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
+            
+            📝 Data Pemesan")
             
             nama_pemesan = st.text_input(
                 "Nama Lengkap", 
-                value=st.session_state.nama_pemesan,
+                value nama_pemesan = st.text_input(
+                "Nama Lengkap", 
+                value=st.session_state=st.session_state.nama_pemesan,
+               .nama_pemesan,
                 placeholder="Masukkan nama kamu",
+                key placeholder="Masukkan nama kamu",
                 key="input_nama"
             )
+="input_nama"
+            )
             kelas = st.text_input(
+                           kelas = st.text_input(
                 "Kelas", 
+                value= "Kelas", 
                 value=st.session_state.kelas,
+                placeholder="Contoh: 10 IPAst.session_state.kelas,
                 placeholder="Contoh: 10 IPA 1",
+                key="input_kelas 1",
                 key="input_kelas"
             )
-            no_hp = st.text_input(
+            no_hp ="
+            )
+            no_hp st.text_input(
                 "No. HP (WA)", 
                 value=st.session_state.no_hp,
                 placeholder="Contoh: 08123456789",
                 key="input_nohp"
             )
             
-            submit = st.form_submit_button("✅ Kirim Pesanan", use_container_width=True)
+            submit = st.text_input(
+                "No. HP (WA)", 
+                value=st.session_state.no_hp,
+                placeholder="Contoh: 08123456789",
+                key="input_nohp"
+            )
+            
+            submit = st.form_sub = st.form_submit_button("✅ Kirim Pesanan", use_container_width=True)
             
             if submit:
-                if not nama_pemesan or not kelas or not no_hp:
+                if not nama_pemmit_button("✅ Kirim Pesanan", use_container_width=True)
+            
+            if submit:
+                if not nama_pemesan or not kelas or not no_hesan or not kelas or not no_hp:
                     st.error("❌ Semua data harus diisi!")
-                elif len(st.session_state.keranjang) == 0:
+                elif len(st.sessionp:
+                    st.error("❌ Semua data harus diisi!")
+                elif len(st.session_state.keranj_state.keranjang) == 0:
+                    stang) == 0:
                     st.error("❌ Keranjang masih kosong!")
                 else:
-                    detail_order = "\n".join([f"- {item['nama']} (Rp{item['harga']:,})" for item in st.session_state.keranjang])
+                    detail_order = "\n".join([f"- {item['nama']} (.error("❌ Keranjang masih kosong!")
+                else:
+                    detail_order = "\n".join([f"- {item['nama']} (Rp{item['harga']:,})" for item in st.session_state.Rp{item['harga']:,})" for item in st.session_state.keranjang])
+                    pesan = f"""
+🛍️ *PESANAN BARU!*
+━━━━━━━━━━━━━━━━
+👤 Nama: {nama_pemesan}
+🏫 Kelas: {kelas}
+📱keranjang])
                     pesan = f"""
 🛍️ *PESANAN BARU!*
 ━━━━━━━━━━━━━━━━
@@ -293,31 +377,63 @@ with st.sidebar:
 📦 *Detail Pesanan:*
 {detail_order}
 ━━━━━━━━━━━━━━━━
-💰 *Total: Rp{total_harga:,}*
+💰 *Total: Rp{total_h No. HP: {no_hp}
 ━━━━━━━━━━━━━━━━
+📦 *Detail Pesanan:*
+{detail_order}
+━━━━━━━━━━━━━━━━
+💰 *Total: Rp{total_harga:,}*
+━━━━━━━━arga:,}*
+━━━━━━━━━━━━━━━━
+                    """
+                    
+                    try:
+                       ━━━━━━━━
                     """
                     
                     try:
                         kirim_wa(pesan)
                         
-                        wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
-                        wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
+                        wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami kirim_wa(pesan)
+                        
+                        wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga proses. Total Rp{total_harga:,}"
+                        wa_link = f:,}"
+                        wa_link = f"https://api.whatsapp"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
+                        
+                        st.success(f"✅ Pesanan ber.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
                         
                         st.success(f"✅ Pesanan berhasil dikirim!")
+                        st.ballhasil dikirim!")
                         st.balloons()
-                        st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
+                        stoons()
+                        st.markdown(f"📱 [Klik di sini untuk chat via.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                         
-                        st.session_state.keranjang = []
-                        st.session_state.nama_pemesan = ""
-                        st.session_state.kelas = ""
+ WhatsApp]({wa_link})")
+                        
+                        st.session_state                        st.session_state.keranjang.keranjang = []
+                        st = []
+                        st.session_state.nama.session_state.nama_pemesan =_pemesan = ""
+                        st.session ""
+                        st.session_state.kelas =_state.kelas = ""
+                        st.session_state.no_hp = ""
+                        
+                        ""
                         st.session_state.no_hp = ""
                         
                         st.rerun()
+                    except Exception st.rerun()
                     except Exception as e:
+                        as e:
                         st.error(f"❌ Error: {e}")
+
+ st.error(f"❌ Error:st.markdown("""
+<div class {e}")
 
 st.markdown("""
 <div class="footer">
-    Social 9D
+   ="footer">
+    Social 9D Social 9D
 </div>
-""", unsafe_allow_html=True)
+
+</div>
+""", unsafe_""", unsafe_allow_html=True)
