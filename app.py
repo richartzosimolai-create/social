@@ -170,7 +170,6 @@ cols = st.columns(3)
 
 for i, p in enumerate(produk):
     with cols[i % 3]:
-        # TAMPILKAN GAMBAR (PAKE HTML + CSS ASPECT-RATIO)
         if "gambar" in p and p["gambar"]:
             st.markdown(f"""
             <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
@@ -196,15 +195,29 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
-# ===== TOMBOL KERANJANG + TEKS (BISA DIKLIK LANGSUNG BUKA SIDEBAR) =====
+# ===== TOMBOL KERANJANG STREAMLIT (BIKIN SENDIRI) =====
+col_btn1, col_btn2, col_btn3 = st.columns([8, 1, 1])
+with col_btn3:
+    if st.button(f"🛒 {total_item}", key="btn_cart", use_container_width=True):
+        st.session_state.show_cart = not st.session_state.show_cart
+        st.rerun()
+
+# KALAU show_cart True, buka sidebar pake JavaScript
+if st.session_state.show_cart:
+    st.markdown("""
+    <script>
+        setTimeout(function() {
+            const sidebarBtn = document.querySelector('[data-testid="stSidebar"] button');
+            if (sidebarBtn) {
+                sidebarBtn.click();
+            }
+        }, 300);
+    </script>
+    """, unsafe_allow_html=True)
+
 st.markdown(f"""
-<div class="cart-badge" onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click()">
-    🛒 Keranjang
-    <span class="count">{total_item}</span>
-</div>
-<div style="position:fixed; bottom:80px; right:30px; z-index:999; background:white; color:#666; padding:4px 12px; border-radius:20px; font-size:11px; box-shadow:0 2px 8px rgba(0,0,0,0.1); cursor:pointer;" 
-     onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click()">
-    👆 klik untuk mengecek keranjang
+<div style="position:fixed; bottom:80px; right:30px; z-index:999; background:white; color:#666; padding:4px 12px; border-radius:20px; font-size:11px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    👆 klik tombol keranjang
 </div>
 """, unsafe_allow_html=True)
 
