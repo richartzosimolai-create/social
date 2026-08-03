@@ -196,10 +196,16 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
+# ===== TOMBOL KERANJANG + TEKS DI SAMPING =====
 st.markdown(f"""
-<div class="cart-badge">
-    🛒 Keranjang
-    <span class="count">{total_item}</span>
+<div style="position:fixed; bottom:30px; right:30px; z-index:999; display:flex; align-items:center; gap:10px;">
+    <div style="background:white; color:#ee4d2d; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; box-shadow:0 2px 10px rgba(0,0,0,0.1);">
+        👆 Klik keranjang
+    </div>
+    <div class="cart-badge" style="margin:0; position:relative; bottom:auto; right:auto;">
+        🛒 Keranjang
+        <span class="count">{total_item}</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
