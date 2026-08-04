@@ -5,12 +5,12 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
-NO_HP_KAMU = "81180895229"      
+NO_HP = "81180895229"      
 
 def kirim_wa(pesan):
     url = "https://api.fonnte.com/send"
     data = {
-        "target": NO_HP_KAMU,
+        "target": NO_HP,
         "message": pesan,
         "countryCode": "62",
     }
