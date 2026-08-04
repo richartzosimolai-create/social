@@ -5,7 +5,7 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
 # ===== INISIALISASI =====
 if "halaman" not in st.session_state:
-    st.session_state.halaman = "produk"  # "produk" atau "keranjang"
+    st.session_state.halaman = "produk"
 
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
@@ -125,31 +125,9 @@ st.markdown("""
         margin-top: 30px;
         border-top: 1px solid #eee;
     }
-    .cart-page {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    .cart-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid #eee;
-    }
-    .cart-total {
-        font-size: 24px;
-        font-weight: 700;
-        color: #ee4d2d;
-        text-align: right;
-        padding-top: 15px;
-        border-top: 2px solid #eee;
-        margin-top: 15px;
-    }
 </style>
 """, unsafe_allow_html=True)
 
-# ===== HEADER =====
 st.markdown("""
 <div class="header">
     <h1>🛍️ <span>Social 9D</span> </h1>
@@ -190,12 +168,46 @@ if st.session_state.halaman == "produk":
 
     total_item = len(st.session_state.keranjang)
     
-    # ===== TOMBOL KERANJANG FLOATING (PAKE STREAMLIT) =====
-    col1, col2, col3, col4, col5 = st.columns([6, 1, 1, 1, 1])
-    with col5:
-        if st.button(f"🛒 {total_item}", key="btn_cart_float"):
-            st.session_state.halaman = "keranjang"
-            st.rerun()
+    # ===== TOMBOL KERANJANG FLOATING (CSS) =====
+    st.markdown(f"""
+    <style>
+        .cart-float {{
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: #ee4d2d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }}
+        .cart-float:hover {{
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(238, 77, 45, 0.6);
+        }}
+        .cart-float .count {{
+            background: white;
+            color: #ee4d2d;
+            border-radius: 50%;
+            padding: 2px 10px;
+            font-size: 14px;
+            font-weight: 700;
+        }}
+    </style>
+    <div class="cart-float" onclick="st.session_state.halaman = 'keranjang'; st.rerun();">
+        🛒 Keranjang
+        <span class="count">{total_item}</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ========================================
 # ===== HALAMAN KERANJANG =====
@@ -207,7 +219,6 @@ else:
     total_item = len(st.session_state.keranjang)
     total_harga = sum(item['harga'] for item in st.session_state.keranjang)
     
-    # Tombol kembali
     if st.button("← Kembali Belanja", key="btn_back"):
         st.session_state.halaman = "produk"
         st.rerun()
@@ -232,7 +243,6 @@ else:
         st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
         st.markdown("---")
         
-        # ===== FORM PEMESANAN =====
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
             
@@ -297,7 +307,6 @@ else:
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
 
-# ===== FOOTER =====
 st.markdown(f"""
 <div class="footer">Jika ada pertanyaan bisa langsung di klik dan ngechat kita
     <a href="https://wa.me/{81180895229}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
