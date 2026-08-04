@@ -3,6 +3,27 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
+# ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
+st.markdown("""
+<style>
+    [data-testid="stSidebar"] button {
+        position: relative;
+    }
+    [data-testid="stSidebar"] button::after {
+        content: " 👈 klik untuk buka keranjang";
+        font-size: 13px;
+        color: #ee4d2d;
+        font-weight: 600;
+        background: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-left: 8px;
+        white-space: nowrap;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
 NO_HP = "81180895229"      
