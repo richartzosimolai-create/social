@@ -7,50 +7,52 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
-# ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
-if st.session_state.show_cart:
-    # KALO KERANJANG TERBUKA: TEKS "klik untuk tutup keranjang"
-    st.markdown("""
-    <style>
-        [data-testid="stSidebar"] button {
-            position: relative;
+# ===== TEKS DI SAMPING TOMBOL SIDEBAR (PAKE JAVASCRIPT) =====
+st.markdown("""
+<style>
+    /* Target tombol sidebar */
+    [data-testid="stSidebar"] button {
+        position: relative;
+    }
+    /* Default: teks buka */
+    [data-testid="stSidebar"] button::after {
+        content: " 👈 klik untuk buka keranjang";
+        font-size: 13px;
+        color: #ee4d2d;
+        font-weight: 600;
+        background: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-left: 8px;
+        white-space: nowrap;
+    }
+    /* Saat sidebar terbuka, teks berubah pakai class */
+    .sidebar-open [data-testid="stSidebar"] button::after {
+        content: " ✕ klik untuk tutup keranjang" !important;
+        color: #ff4444 !important;
+        border: 1px solid #ff4444 !important;
+    }
+</style>
+<script>
+    // Deteksi perubahan sidebar
+    function checkSidebar() {
+        const sidebar = document.querySelector('[data-testid="stSidebar"]');
+        if (sidebar) {
+            const isOpen = sidebar.getAttribute('aria-expanded') === 'true';
+            if (isOpen) {
+                document.body.classList.add('sidebar-open');
+            } else {
+                document.body.classList.remove('sidebar-open');
+            }
         }
-        [data-testid="stSidebar"] button::after {
-            content: " ✕ klik untuk tutup keranjang";
-            font-size: 13px;
-            color: #ff4444;
-            font-weight: 600;
-            background: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-left: 8px;
-            white-space: nowrap;
-            border: 1px solid #ff4444;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-else:
-    # KALO KERANJANG TERTUTUP: TEKS "klik untuk buka keranjang"
-    st.markdown("""
-    <style>
-        [data-testid="stSidebar"] button {
-            position: relative;
-        }
-        [data-testid="stSidebar"] button::after {
-            content: " 👈 klik untuk buka keranjang";
-            font-size: 13px;
-            color: #ee4d2d;
-            font-weight: 600;
-            background: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-left: 8px;
-            white-space: nowrap;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+    }
+    // Cek setiap 500ms
+    setInterval(checkSidebar, 500);
+    // Cek juga pas load
+    setTimeout(checkSidebar, 1000);
+</script>
+""", unsafe_allow_html=True)
 
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
