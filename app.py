@@ -40,8 +40,8 @@ produk = [
     {"id": 2, "nama": "Chilis", "harga": 67, "gambar": "https://i.ibb.co.com/GvvnbcHn/Whats-App-Image-2026-08-02-at-19-03-45.jpg"},
     {"id": 3, "nama": "Samyang roll moza", "harga": 67, "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"},
     {"id": 4, "nama": "Scoopable cookies", "harga": 67, "gambar": "https://i.ibb.co.com/BVBH8p65/Whats-App-Image-2026-08-02-at-19-03-46.jpg"},
-    {"id": 5, "nama": "Milo dino", "harga": 67, "gambar": "https://imgur.com/a/2XxUdCs"},
-    {"id": 6, "nama": "Mojito", "harga": 67, "gambar": "https://imgur.com/a/6yMXBdP"},
+    {"id": 5, "nama": "Milo dino", "harga": 67, "gambar": "https://i.imgur.com/YgPzFFl.jpeg"},
+    {"id": 6, "nama": "Mojito", "harga": 67, "gambar": "https://i.imgur.com/dvcbExw.jpeg"},
 ]
 
 st.markdown("""
