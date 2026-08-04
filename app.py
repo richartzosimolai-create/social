@@ -168,46 +168,12 @@ if st.session_state.halaman == "produk":
 
     total_item = len(st.session_state.keranjang)
     
-    # ===== TOMBOL KERANJANG FLOATING (CSS) =====
-    st.markdown(f"""
-    <style>
-        .cart-float {{
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            background: #ee4d2d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-        }}
-        .cart-float:hover {{
-            transform: scale(1.05);
-            box-shadow: 0 6px 30px rgba(238, 77, 45, 0.6);
-        }}
-        .cart-float .count {{
-            background: white;
-            color: #ee4d2d;
-            border-radius: 50%;
-            padding: 2px 10px;
-            font-size: 14px;
-            font-weight: 700;
-        }}
-    </style>
-    <div class="cart-float" onclick="st.session_state.halaman = 'keranjang'; st.rerun();">
-        🛒 Keranjang
-        <span class="count">{total_item}</span>
-    </div>
-    """, unsafe_allow_html=True)
+    # ===== TOMBOL KERANJANG FLOATING (PAKE STREAMLIT BUTTON) =====
+    col1, col2, col3, col4, col5 = st.columns([6, 1, 1, 1, 1])
+    with col5:
+        if st.button(f"🛒 {total_item}", key="btn_cart_float"):
+            st.session_state.halaman = "keranjang"
+            st.rerun()
 
 # ========================================
 # ===== HALAMAN KERANJANG =====
