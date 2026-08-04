@@ -166,17 +166,16 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-      # ===== TOMBOL KERANJANG FLOATING (PAKE ST.BUTTON) =====
+    # ===== TOMBOL KERANJANG FLOATING (PAKE ST.BUTTON + CSS) =====
     total_item = len(st.session_state.keranjang)
 
-    # CSS buat bungkus tombol biar floating
     st.markdown("""
     <style>
         .floating-cart {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
+            position: fixed !important;
+            bottom: 30px !important;
+            right: 30px !important;
+            z-index: 9999 !important;
         }
         .floating-cart .stButton button {
             background: #ee4d2d !important;
@@ -196,7 +195,6 @@ if st.session_state.halaman == "produk":
     </style>
     """, unsafe_allow_html=True)
     
-    # Buat div floating, lalu taruh tombol di dalamnya
     st.markdown('<div class="floating-cart">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([8, 1, 1])
     with col2:
@@ -204,6 +202,7 @@ if st.session_state.halaman == "produk":
             st.session_state.halaman = "keranjang"
             st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
+
 # ========================================
 # ===== HALAMAN KERANJANG =====
 # ========================================
