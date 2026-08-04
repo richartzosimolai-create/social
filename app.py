@@ -1,7 +1,9 @@
 import streamlit as st
 import requests
+from streamlit_float import float_init, float_parent
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
+float_init()
 
 # ===== INISIALISASI =====
 if "halaman" not in st.session_state:
@@ -166,17 +168,22 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    st.markdown("---")
+   with st.container():
+    if st.button(
+        f"🛒 Keranjang ({len(st.session_state.keranjang)})",
+        key="btn_keranjang",
+    ):
+        st.session_state.halaman = "keranjang"
+        st.rerun()
 
-    col1, col2 = st.columns([5, 1])
-
-    with col2:
-        if st.button(
-            f"🛒 Keranjang ({len(st.session_state.keranjang)})",
-            use_container_width=True,
-        ):
-            st.session_state.halaman = "keranjang"
-            st.rerun()
+    float_parent(
+        css="""
+        position:fixed;
+        bottom:30px;
+        right:30px;
+        z-index:9999;
+        """
+    )
 # ========================================
 # ===== HALAMAN KERANJANG =====
 # ========================================
