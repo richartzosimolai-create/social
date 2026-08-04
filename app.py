@@ -3,6 +3,7 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
+# ===== CEK STATUS SIDEBAR =====
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
@@ -195,7 +196,7 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
-# ===== TOMBOL KERANJANG KLIK LANGSUNG BUKA SIDEBAR =====
+# ===== TOMBOL KERANJANG TETEP DI TEMPATNYA (CSS CART-BADGE) TAPI BISA KLIK =====
 st.markdown(f"""
 <div class="cart-badge" onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();" style="cursor:pointer;">
     🛒 Keranjang
@@ -203,7 +204,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ===== BUKA SIDEBAR OTOMATIS KALO show_cart = True =====
+# ===== BUKA SIDEBAR OTOMATIS KALO ADA PRODUK DITAMBAH =====
 if st.session_state.show_cart:
     st.markdown("""
     <script>
