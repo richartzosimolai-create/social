@@ -166,10 +166,9 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    # ===== TOMBOL KERANJANG FLOATING (BISA DIKLIK) =====
+    # ===== TOMBOL KERANJANG FLOATING (TETAP DI KANAN BAWAH) =====
     total_item = len(st.session_state.keranjang)
     
-    # CSS buat tombol floating
     st.markdown("""
     <style>
         .floating-cart {
@@ -198,7 +197,6 @@ if st.session_state.halaman == "produk":
     </style>
     """, unsafe_allow_html=True)
     
-    # Tombol Streamlit (dibungkus div floating)
     with st.container():
         st.markdown('<div class="floating-cart">', unsafe_allow_html=True)
         col1, col2, col3 = st.columns([8, 1, 1])
