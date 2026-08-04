@@ -167,11 +167,12 @@ if st.session_state.halaman == "produk":
                 st.rerun()
 
     total_item = len(st.session_state.keranjang)
-    
-    # ===== TOMBOL KERANJANG FLOATING (PAKE STREAMLIT BUTTON) =====
+
+    # ===== TOMBOL KERANJANG DI BAWAH PRODUK (IKUT SCROLL) =====
+    st.markdown("---")
     col1, col2, col3, col4, col5 = st.columns([6, 1, 1, 1, 1])
     with col5:
-        if st.button(f"🛒 {total_item}", key="btn_cart_float"):
+        if st.button(f"🛒 {total_item}", key="btn_cart_bottom"):
             st.session_state.halaman = "keranjang"
             st.rerun()
 
