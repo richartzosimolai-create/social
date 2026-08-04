@@ -224,12 +224,38 @@ if st.session_state.halaman == "produk":
 
             st.markdown("<div style='margin-bottom:20px'></div>", unsafe_allow_html=True)
 
-    # ===== FLOATING BUTTON KERANJANG (BENAR - pakai st.button) =====
-    st.markdown('<div class="floating-wrap">', unsafe_allow_html=True)
-    if st.button(f"Keranjang  ({total_item} item)", key="btn_float_keranjang"):
-        st.session_state.halaman = "keranjang"
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
+    # ===== FLOATING BUTTON KERANJANG (STICKY) =====
+st.markdown("""
+<style>
+    .sticky-cart {
+        position: sticky;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+        background: #ee4d2d;
+        color: white;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-size: 16px;
+        font-weight: 700;
+        box-shadow: 0 4px 20px rgba(238, 77, 45, 0.45);
+        border: none;
+        transition: background 0.2s;
+    }
+    .sticky-cart:hover {
+        background: #d43b1f;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Di tempat yang sama di dalam halaman produk, tambahkan tombol keranjang:
+if st.button(f"Keranjang ({total_item} item)", key="btn_sticky_cart"):
+    st.session_state.halaman = "keranjang"
+    st.rerun()
+
+# ===== TOMBOL KERANJANG =====
+st.markdown(f'<button class="sticky-cart" onclick="document.querySelector(\'[data-testid="stButton"]\').click();">Keranjang ({total_item} item)</button>', unsafe_allow_html=True)
+
 
 # ========================================
 # ===== HALAMAN KERANJANG =====
