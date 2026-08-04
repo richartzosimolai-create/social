@@ -166,14 +166,21 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    # ===== TOMBOL KERANJANG DI KANAN BAWAH (IKUT SCROLL) =====
+    # ===== TOMBOL KERANJANG PALING AWAL (FLOATING) =====
     total_item = len(st.session_state.keranjang)
-    st.markdown("---")
-    col1, col2, col3, col4, col5 = st.columns([6, 1, 1, 1, 1])
-    with col5:
-        if st.button(f"🛒 {total_item}", key="btn_cart_bottom"):
-            st.session_state.halaman = "keranjang"
-            st.rerun()
+
+    st.markdown(f"""
+    <div style="position: fixed; bottom: 30px; right: 30px; z-index: 999; 
+                background: #ee4d2d; color: white; border: none; border-radius: 50px; 
+                padding: 12px 20px; font-size: 14px; font-weight: 600; 
+                box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4); cursor: pointer;
+                display: flex; align-items: center; gap: 8px;"
+         onclick="st.session_state.halaman = 'keranjang'; st.rerun();">
+        🛒 Keranjang
+        <span style="background: white; color: #ee4d2d; border-radius: 50%; 
+                     padding: 0px 10px; font-size: 12px; font-weight: 700;">{total_item}</span>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ========================================
 # ===== HALAMAN KERANJANG =====
