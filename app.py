@@ -137,9 +137,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ========================================
-# ===== HALAMAN PRODUK =====
-# ========================================
+#halaman awal
 if st.session_state.halaman == "produk":
 
     cols = st.columns(3)
@@ -186,17 +184,15 @@ if st.session_state.halaman == "produk":
         width: 220px;
         """
     )
-# ========================================
-# ===== HALAMAN KERANJANG =====
-# ========================================
+#halaman keranjangny
 else:
-    st.markdown("## 🛒 Keranjang Belanja")
+    st.markdown("## 🛒 Keranjang ")
     st.markdown("---")
     
     total_item = len(st.session_state.keranjang)
     total_harga = sum(item['harga'] for item in st.session_state.keranjang)
     
-    if st.button("← Kembali Belanja", key="btn_back"):
+    if st.button("← Kembali ", key="btn_back"):
         st.session_state.halaman = "produk"
         st.rerun()
     
