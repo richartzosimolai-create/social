@@ -6,9 +6,12 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 # ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
 st.markdown("""
 <style>
+    /* Target tombol sidebar */
     [data-testid="stSidebar"] button {
         position: relative;
     }
+    
+    /* Saat sidebar tertutup */
     [data-testid="stSidebar"] button::after {
         content: " 👈 klik untuk buka keranjang";
         font-size: 13px;
@@ -20,6 +23,13 @@ st.markdown("""
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         margin-left: 8px;
         white-space: nowrap;
+    }
+    
+    /* Saat sidebar terbuka, teksnya berubah */
+    [data-testid="stSidebar"][aria-expanded="true"] button::after {
+        content: " ✕ klik untuk tutup keranjang";
+        color: #ff4444;
+        border: 1px solid #ff4444;
     }
 </style>
 """, unsafe_allow_html=True)
