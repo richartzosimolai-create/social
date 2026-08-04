@@ -168,11 +168,10 @@ if st.session_state.halaman == "produk":
 
     total_item = len(st.session_state.keranjang)
     
-    # ===== TOMBOL KERANJANG (IKUT SCROLL) =====
-    st.markdown("---")
-    col1, col2, col3 = st.columns([4, 2, 4])
-    with col2:
-        if st.button(f"🛒 Lihat Keranjang ({total_item})", key="btn_lihat_keranjang", use_container_width=True):
+    # ===== TOMBOL KERANJANG FLOATING (PAKE STREAMLIT BUTTON) =====
+    col1, col2, col3, col4, col5 = st.columns([6, 1, 1, 1, 1])
+    with col5:
+        if st.button(f"🛒 {total_item}", key="btn_cart_float"):
             st.session_state.halaman = "keranjang"
             st.rerun()
 
