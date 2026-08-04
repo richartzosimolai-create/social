@@ -166,9 +166,8 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
+    # ===== TOMBOL KERANJANG DI KANAN BAWAH (IKUT SCROLL) =====
     total_item = len(st.session_state.keranjang)
-
-    # ===== TOMBOL KERANJANG DI BAWAH PRODUK (IKUT SCROLL) =====
     st.markdown("---")
     col1, col2, col3, col4, col5 = st.columns([6, 1, 1, 1, 1])
     with col5:
