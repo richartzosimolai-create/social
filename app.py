@@ -36,12 +36,12 @@ if "no_hp" not in st.session_state:
     st.session_state.no_hp = ""
 
 produk = [
-    {"id": 1, "nama": "Dubai Chewy cookie strawberry", "harga": 67, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
+    {"id": 1, "nama": "Dubai chewy cookie strawberry", "harga": 67, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
     {"id": 2, "nama": "Chilis", "harga": 67, "gambar": "https://i.ibb.co.com/GvvnbcHn/Whats-App-Image-2026-08-02-at-19-03-45.jpg"},
     {"id": 3, "nama": "Samyang roll moza", "harga": 67, "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"},
     {"id": 4, "nama": "Scoopable cookies", "harga": 67, "gambar": "https://i.ibb.co.com/BVBH8p65/Whats-App-Image-2026-08-02-at-19-03-46.jpg"},
-    {"id": 5, "nama": "67", "harga": 67, "gambar": ""},
-    {"id": 6, "nama": "67", "harga": 67, "gambar": ""},
+    {"id": 5, "nama": "Milo dino", "harga": 67, "gambar": "https://imgur.com/a/2XxUdCs"},
+    {"id": 6, "nama": "Mojito, "harga": 67, "gambar": ""},
 ]
 
 st.markdown("""
