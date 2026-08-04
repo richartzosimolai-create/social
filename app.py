@@ -290,4 +290,3 @@ st.markdown(f"""
     </a>
 </div>
 """, unsafe_allow_html=True)
-napa button keranjang di klik ga ke halaman keranjangnya
