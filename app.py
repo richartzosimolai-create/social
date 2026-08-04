@@ -6,8 +6,10 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 # ===== INISIALISASI =====
 if "halaman" not in st.session_state:
     st.session_state.halaman = "produk"
+
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
+
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
@@ -45,53 +47,146 @@ produk = [
 # ===== GLOBAL CSS =====
 st.markdown("""
 <style>
-.produk-card {
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 10px;
-    margin-bottom: 16px;
-    text-align: center;
-}
-.produk-card img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-    height: 180px;
-}
-.produk-nama {
-    font-weight: 600;
-    margin-top: 8px;
-}
-.produk-harga {
-    color: #e63946;
-    font-weight: 700;
-}
+    /* Sembunyikan default streamlit elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
 
-/* ===== FLOATING CART BUTTON FIX ===== */
-div:has(> div#floating-cart-marker) + div[data-testid="stButton"] {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    width: auto;
-}
-div:has(> div#floating-cart-marker) + div[data-testid="stButton"] button {
-    border-radius: 50px;
-    padding: 0.75em 1.5em;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    background-color: #e63946;
-    color: white;
-    border: none;
-}
+    .header {
+        background: white;
+        padding: 15px 25px;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+    .header h1 {
+        font-size: 24px;
+        color: #1a1a1a;
+        margin: 0;
+    }
+    .header h1 span {
+        color: #ee4d2d;
+    }
+    .header .badge {
+        background: #ee4d2d;
+        color: white;
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .product-card {
+        background: white;
+        border-radius: 0 0 16px 16px;
+        padding: 12px 15px 15px 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        text-align: center;
+        border: 1px solid #f0f0f0;
+        border-top: none;
+    }
+    .product-card h3 {
+        font-size: 15px;
+        margin: 5px 0 4px 0;
+        color: #1a1a1a;
+    }
+    .product-card .harga {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ee4d2d;
+        margin-bottom: 0;
+    }
+
+    /* Tombol merah global */
+    .stButton > button {
+        background: #ee4d2d !important;
+        color: white !important;
+        border: none !important;
+        width: 100% !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        padding: 8px !important;
+        font-size: 14px !important;
+        transition: background 0.2s !important;
+    }
+    .stButton > button:hover {
+        background: #d43b1f !important;
+        color: white !important;
+    }
+
+    /* Tombol back — override warna jadi abu */
+    .back-btn .stButton > button {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+        border-radius: 10px !important;
+    }
+    .back-btn .stButton > button:hover {
+        background: #ddd !important;
+        color: #111 !important;
+    }
+
+    /* Floating cart button */
+    .floating-wrap {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+    }
+    .floating-wrap .stButton > button {
+        background: #ee4d2d !important;
+        color: white !important;
+        border-radius: 50px !important;
+        padding: 12px 28px !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        box-shadow: 0 4px 20px rgba(238, 77, 45, 0.45) !important;
+        width: auto !important;
+        min-width: 180px !important;
+        border: none !important;
+    }
+    .floating-wrap .stButton > button:hover {
+        background: #d43b1f !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(238, 77, 45, 0.5) !important;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 20px 0 10px;
+        color: #999;
+        font-size: 13px;
+        margin-top: 30px;
+        border-top: 1px solid #eee;
+    }
+
+    /* Form styling */
+    .stTextInput > div > div > input {
+        border-radius: 10px !important;
+        border: 1.5px solid #e0e0e0 !important;
+        padding: 10px 14px !important;
+    }
+    .stTextInput > div > div > input:focus {
+        border-color: #ee4d2d !important;
+        box-shadow: 0 0 0 2px rgba(238,77,45,0.15) !important;
+    }
+    .stForm {
+        background: white;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        border: 1px solid #f0f0f0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # ===== HEADER =====
 total_item = len(st.session_state.keranjang)
 st.markdown(f"""
-<div style="padding:10px 0;">
-    <h2 style="margin-bottom:0;">🛍️ Social 9D</h2>
-    <p style="color:gray;margin-top:0;">{total_item} item di keranjang</p>
+<div class="header">
+    <h1>🛍️ <span>Social 9D</span></h1>
+    <div class="badge">{total_item} item di keranjang</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -99,26 +194,42 @@ st.markdown(f"""
 # ===== HALAMAN PRODUK =====
 # ========================================
 if st.session_state.halaman == "produk":
+
     cols = st.columns(3)
+
     for i, p in enumerate(produk):
         with cols[i % 3]:
+            # Gambar produk
+            if "gambar" in p and p["gambar"]:
+                st.markdown(f"""
+                <div style="width:100%; aspect-ratio:1/1; overflow:hidden;
+                            border-radius:16px 16px 0 0; background:#f5f5f5;
+                            border:1px solid #eee; border-bottom:none;">
+                    <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                """, unsafe_allow_html=True)
+
+            # Info produk
             st.markdown(f"""
-            <div class="produk-card">
-                <img src="{p['gambar']}" />
-                <div class="produk-nama">{p['nama']}</div>
-                <div class="produk-harga">Rp{p['harga']:,}</div>
+            <div class="product-card">
+                <h3>{p['nama']}</h3>
+                <p class="harga">Rp{p['harga']:,}</p>
             </div>
             """, unsafe_allow_html=True)
 
+            # Tombol tambah keranjang
             if st.button("Tambahkan ke Keranjang", key=f"add_{p['id']}"):
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    # ===== FLOATING BUTTON KERANJANG (marker + button harus berurutan) =====
-    st.markdown('<div id="floating-cart-marker"></div>', unsafe_allow_html=True)
-    if st.button(f"🛒 Keranjang ({total_item} item)", key="btn_float_keranjang"):
+            st.markdown("<div style='margin-bottom:20px'></div>", unsafe_allow_html=True)
+
+    # ===== FLOATING BUTTON KERANJANG (BENAR - pakai st.button) =====
+    st.markdown('<div class="floating-wrap">', unsafe_allow_html=True)
+    if st.button(f"Keranjang  ({total_item} item)", key="btn_float_keranjang"):
         st.session_state.halaman = "keranjang"
         st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ========================================
 # ===== HALAMAN KERANJANG =====
@@ -129,15 +240,19 @@ else:
 
     total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
+    # Tombol kembali
+    st.markdown('<div class="back-btn">', unsafe_allow_html=True)
     if st.button("Kembali Belanja", key="btn_back"):
         st.session_state.halaman = "produk"
         st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("---")
 
     if len(st.session_state.keranjang) == 0:
         st.info("Keranjang masih kosong. Yuk belanja dulu!")
     else:
+        # Daftar item keranjang
         for idx, item in enumerate(st.session_state.keranjang):
             col1, col2, col3 = st.columns([3, 1.5, 0.5])
             with col1:
@@ -156,6 +271,7 @@ else:
         # ===== FORM PEMESANAN =====
         with st.form("form_pesan"):
             st.markdown("### Data Pemesan")
+
             nama_pemesan = st.text_input(
                 "Nama Lengkap",
                 value=st.session_state.nama_pemesan,
@@ -171,6 +287,7 @@ else:
                 value=st.session_state.no_hp,
                 placeholder="Contoh: 08123456789",
             )
+
             submit = st.form_submit_button("Kirim Pesanan", use_container_width=True)
 
             if submit:
@@ -180,19 +297,21 @@ else:
                     st.error("Keranjang masih kosong!")
                 else:
                     detail_order = "\n".join(
-                        [f"- {item['nama']} (Rp{item['harga']:,})" for item in st.session_state.keranjang]
+                        [f"- {item['nama']} (Rp{item['harga']:,})"
+                         for item in st.session_state.keranjang]
                     )
-                    pesan = f"""*PESANAN BARU - Social 9D*
-
-Nama    : {nama_pemesan}
-Kelas   : {kelas}
-No. HP  : {no_hp}
+                    pesan = f"""
+*PESANAN BARU - Social 9D*
+Nama   : {nama_pemesan}
+Kelas  : {kelas}
+No. HP : {no_hp}
 
 *Detail Pesanan:*
 {detail_order}
 
 *Total: Rp{total_harga:,}*
-"""
+                    """
+
                     kirim_wa(pesan)
 
                     wa_text = (
@@ -205,6 +324,7 @@ No. HP  : {no_hp}
                         f"&text={wa_text.replace(' ', '%20')}"
                     )
 
+                    # Simpan data ke session sebelum reset
                     st.session_state.keranjang = []
                     st.session_state.nama_pemesan = ""
                     st.session_state.kelas = ""
@@ -218,8 +338,12 @@ No. HP  : {no_hp}
                     )
 
 # ===== FOOTER =====
-st.markdown("""
-<div style="text-align:center; padding:20px 0; color:gray;">
-    Ada pertanyaan? Hubungi kami langsung via WhatsApp
+st.markdown(f"""
+<div class="footer">
+    Ada pertanyaan? Hubungi kami langsung via
+    <a href="https://wa.me/62{NO_HP}" target="_blank"
+       style="color:#ee4d2d; text-decoration:none; font-weight:600;">
+        WhatsApp
+    </a>
 </div>
 """, unsafe_allow_html=True)
