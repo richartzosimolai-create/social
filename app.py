@@ -7,53 +7,6 @@ st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 if "show_cart" not in st.session_state:
     st.session_state.show_cart = False
 
-# ===== TEKS DI SAMPING TOMBOL SIDEBAR (PAKE JAVASCRIPT) =====
-st.markdown("""
-<style>
-    /* Target tombol sidebar */
-    [data-testid="stSidebar"] button {
-        position: relative;
-    }
-    /* Default: teks buka */
-    [data-testid="stSidebar"] button::after {
-        content: " 👈 klik untuk buka keranjang";
-        font-size: 13px;
-        color: #ee4d2d;
-        font-weight: 600;
-        background: white;
-        padding: 4px 12px;
-        border-radius: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin-left: 8px;
-        white-space: nowrap;
-    }
-    /* Saat sidebar terbuka, teks berubah pakai class */
-    .sidebar-open [data-testid="stSidebar"] button::after {
-        content: " ✕ klik untuk tutup keranjang" !important;
-        color: #ff4444 !important;
-        border: 1px solid #ff4444 !important;
-    }
-</style>
-<script>
-    // Deteksi perubahan sidebar
-    function checkSidebar() {
-        const sidebar = document.querySelector('[data-testid="stSidebar"]');
-        if (sidebar) {
-            const isOpen = sidebar.getAttribute('aria-expanded') === 'true';
-            if (isOpen) {
-                document.body.classList.add('sidebar-open');
-            } else {
-                document.body.classList.remove('sidebar-open');
-            }
-        }
-    }
-    // Cek setiap 500ms
-    setInterval(checkSidebar, 500);
-    // Cek juga pas load
-    setTimeout(checkSidebar, 1000);
-</script>
-""", unsafe_allow_html=True)
-
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
 NO_HP = "81180895229"      
@@ -249,6 +202,55 @@ st.markdown(f"""
     <span class="count">{total_item}</span>
 </div>
 """, unsafe_allow_html=True)
+
+# ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
+if st.session_state.show_cart:
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] button::after {
+            content: " ✕ klik untuk tutup keranjang" !important;
+            font-size: 13px !important;
+            color: #ff4444 !important;
+            font-weight: 600 !important;
+            background: white !important;
+            padding: 4px 12px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            margin-left: 8px !important;
+            white-space: nowrap !important;
+            border: 1px solid #ff4444 !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] button::after {
+            content: " 👈 klik untuk buka keranjang" !important;
+            font-size: 13px !important;
+            color: #ee4d2d !important;
+            font-weight: 600 !important;
+            background: white !important;
+            padding: 4px 12px !important;
+            border-radius: 20px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+            margin-left: 8px !important;
+            white-space: nowrap !important;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+# ===== TOMBOL BUKA/TUTUP KERANJANG DI HALAMAN UTAMA =====
+col1, col2, col3 = st.columns([4, 2, 4])
+with col2:
+    if st.session_state.show_cart:
+        if st.button("✕ Tutup Keranjang", key="btn_toggle_cart", use_container_width=True):
+            st.session_state.show_cart = False
+            st.rerun()
+    else:
+        if st.button("🛒 Buka Keranjang", key="btn_toggle_cart", use_container_width=True):
+            st.session_state.show_cart = True
+            st.rerun()
 
 with st.sidebar:
     st.markdown("## 🛒 Keranjang Belanja")
