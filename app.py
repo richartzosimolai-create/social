@@ -166,7 +166,7 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    # ===== TOMBOL KERANJANG FLOATING (TETAP DI KANAN BAWAH) =====
+    # ===== TOMBOL KERANJANG FLOATING (KAYAK AWAL) =====
     total_item = len(st.session_state.keranjang)
     
     st.markdown("""
@@ -182,12 +182,15 @@ if st.session_state.halaman == "produk":
             color: white !important;
             border: none !important;
             border-radius: 50px !important;
-            padding: 15px 25px !important;
+            padding: 12px 24px !important;
             font-size: 16px !important;
             font-weight: 600 !important;
             box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4) !important;
             width: auto !important;
             transition: all 0.3s !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
         }
         .floating-cart .stButton button:hover {
             transform: scale(1.05) !important;
