@@ -166,9 +166,10 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    # ===== TOMBOL KERANJANG (BENTUK KAYAK AWAL, FUNGSI PAKE ST.BUTTON) =====
+      # ===== TOMBOL KERANJANG FLOATING (PAKE ST.BUTTON) =====
     total_item = len(st.session_state.keranjang)
 
+    # CSS buat bungkus tombol biar floating
     st.markdown("""
     <style>
         .floating-cart {
@@ -187,30 +188,19 @@ if st.session_state.halaman == "produk":
             font-weight: 600 !important;
             box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4) !important;
             width: auto !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 8px !important;
         }
         .floating-cart .stButton button:hover {
             transform: scale(1.05) !important;
             background: #d43b1f !important;
         }
-        .floating-cart .badge {
-            background: white;
-            color: #ee4d2d;
-            border-radius: 50%;
-            padding: 0px 10px;
-            font-size: 14px;
-            font-weight: 700;
-        }
     </style>
     """, unsafe_allow_html=True)
     
-    # Bikin div floating, lalu taruh tombol di dalamnya
+    # Buat div floating, lalu taruh tombol di dalamnya
     st.markdown('<div class="floating-cart">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([8, 1, 1])
     with col2:
-        if st.button(f"🛒 Keranjang {total_item}", key="btn_cart_float_fix"):
+        if st.button(f"🛒 {total_item}", key="btn_cart_float"):
             st.session_state.halaman = "keranjang"
             st.rerun()
     st.markdown('</div>', unsafe_allow_html=True)
