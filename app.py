@@ -267,7 +267,7 @@ else:
                         wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
                         wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
                         
-                        st.success(f"✅ Pesanan berhasil dikirim!")
+                        st.success(f"✅ Pesanan udah dikirim!")
                         st.balloons()
                         st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                         
