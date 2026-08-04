@@ -168,12 +168,53 @@ if st.session_state.halaman == "produk":
 
     total_item = len(st.session_state.keranjang)
     
-    # ===== TOMBOL KERANJANG (PAKE STREAMLIT, PASTI JALAN!) =====
-    col1, col2, col3 = st.columns([4, 2, 4])
+    # ===== TOMBOL KERANJANG FLOATING (PAKE STREAMLIT BUTTON + CSS) =====
+    st.markdown(f"""
+    <style>
+        .floating-cart {{
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }}
+        .floating-cart .stButton button {{
+            background: #ee4d2d !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50px !important;
+            padding: 15px 25px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4) !important;
+            width: auto !important;
+            transition: all 0.3s !important;
+        }}
+        .floating-cart .stButton button:hover {{
+            transform: scale(1.05) !important;
+            box-shadow: 0 6px 30px rgba(238, 77, 45, 0.6) !important;
+            background: #d43b1f !important;
+        }}
+        .floating-cart .stButton button .badge {{
+            background: white;
+            color: #ee4d2d;
+            border-radius: 50%;
+            padding: 2px 10px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-left: 8px;
+        }}
+    </style>
+    <div class="floating-cart">
+    """, unsafe_allow_html=True)
+    
+    # Tombol Streamlit (dalam container floating)
+    col1, col2, col3 = st.columns([8, 1, 1])
     with col2:
-        if st.button(f"🛒 Lihat Keranjang ({total_item})", key="btn_lihat_keranjang", use_container_width=True):
+        if st.button(f"🛒 Keranjang {total_item}", key="btn_cart_float"):
             st.session_state.halaman = "keranjang"
             st.rerun()
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ========================================
 # ===== HALAMAN KERANJANG =====
