@@ -3,6 +3,9 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
+if "show_cart" not in st.session_state:
+    st.session_state.show_cart = False
+
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
 NO_HP = "81180895229"      
@@ -24,10 +27,6 @@ def kirim_wa(pesan):
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
 
-if "show_cart" not in st.session_state:
-    st.session_state.show_cart = False
-
-# formny
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
@@ -196,12 +195,26 @@ for i, p in enumerate(produk):
 total_item = len(st.session_state.keranjang)
 total_harga = sum(item['harga'] for item in st.session_state.keranjang)
 
+# ===== TOMBOL KERANJANG KLIK LANGSUNG BUKA SIDEBAR =====
 st.markdown(f"""
-<div class="cart-badge">
+<div class="cart-badge" onclick="document.querySelector('[data-testid=\\"stSidebar\\"] button')?.click();" style="cursor:pointer;">
     🛒 Keranjang
     <span class="count">{total_item}</span>
 </div>
 """, unsafe_allow_html=True)
+
+# ===== BUKA SIDEBAR OTOMATIS KALO show_cart = True =====
+if st.session_state.show_cart:
+    st.markdown("""
+    <script>
+        setTimeout(function() {
+            const sidebarBtn = document.querySelector('[data-testid="stSidebar"] button');
+            if (sidebarBtn) {
+                sidebarBtn.click();
+            }
+        }, 300);
+    </script>
+    """, unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown("## 🛒 Keranjang Belanja")
