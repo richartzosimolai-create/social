@@ -166,48 +166,54 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-    # ===== TOMBOL KERANJANG (BENTUK BARU, FUNGSI TETAP) =====
+    # ===== TOMBOL KERANJANG (BENTUK KAYAK AWAL, FUNGSI PAKE ST.BUTTON) =====
     total_item = len(st.session_state.keranjang)
 
-    st.markdown(f"""
+    st.markdown("""
     <style>
-        .floating-cart {{
+        .floating-cart {
             position: fixed;
             bottom: 30px;
             right: 30px;
             z-index: 999;
-            background: #ee4d2d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 600;
-            box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }}
-        .floating-cart:hover {{
-            transform: scale(1.05);
-            box-shadow: 0 6px 30px rgba(238, 77, 45, 0.6);
-        }}
-        .floating-cart .badge {{
+        }
+        .floating-cart .stButton button {
+            background: #ee4d2d !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 50px !important;
+            padding: 12px 24px !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 20px rgba(238, 77, 45, 0.4) !important;
+            width: auto !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        .floating-cart .stButton button:hover {
+            transform: scale(1.05) !important;
+            background: #d43b1f !important;
+        }
+        .floating-cart .badge {
             background: white;
             color: #ee4d2d;
             border-radius: 50%;
-            padding: 0px 12px;
+            padding: 0px 10px;
             font-size: 14px;
             font-weight: 700;
-        }}
+        }
     </style>
-    <div class="floating-cart" onclick="st.session_state.halaman = 'keranjang'; st.rerun();">
-        🛒 Keranjang
-        <span class="badge">{total_item}</span>
-    </div>
     """, unsafe_allow_html=True)
+    
+    # Bikin div floating, lalu taruh tombol di dalamnya
+    st.markdown('<div class="floating-cart">', unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([8, 1, 1])
+    with col2:
+        if st.button(f"🛒 Keranjang {total_item}", key="btn_cart_float_fix"):
+            st.session_state.halaman = "keranjang"
+            st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 # ========================================
 # ===== HALAMAN KERANJANG =====
 # ========================================
