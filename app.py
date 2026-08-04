@@ -3,36 +3,54 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
+# ===== CEK STATUS SIDEBAR =====
+if "show_cart" not in st.session_state:
+    st.session_state.show_cart = False
+
 # ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
-st.markdown("""
-<style>
-    /* Target tombol sidebar */
-    [data-testid="stSidebar"] button {
-        position: relative;
-    }
-    
-    /* Saat sidebar tertutup */
-    [data-testid="stSidebar"] button::after {
-        content: " 👈 klik untuk buka keranjang";
-        font-size: 13px;
-        color: #ee4d2d;
-        font-weight: 600;
-        background: white;
-        padding: 4px 12px;
-        border-radius: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin-left: 8px;
-        white-space: nowrap;
-    }
-    
-    /* Saat sidebar terbuka, teksnya berubah */
-    [data-testid="stSidebar"][aria-expanded="true"] button::after {
-        content: " ✕ klik untuk tutup keranjang";
-        color: #ff4444;
-        border: 1px solid #ff4444;
-    }
-</style>
-""", unsafe_allow_html=True)
+if st.session_state.show_cart:
+    # KALO KERANJANG TERBUKA: TEKS "klik untuk tutup keranjang"
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] button {
+            position: relative;
+        }
+        [data-testid="stSidebar"] button::after {
+            content: " ✕ klik untuk tutup keranjang";
+            font-size: 13px;
+            color: #ff4444;
+            font-weight: 600;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-left: 8px;
+            white-space: nowrap;
+            border: 1px solid #ff4444;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    # KALO KERANJANG TERTUTUP: TEKS "klik untuk buka keranjang"
+    st.markdown("""
+    <style>
+        [data-testid="stSidebar"] button {
+            position: relative;
+        }
+        [data-testid="stSidebar"] button::after {
+            content: " 👈 klik untuk buka keranjang";
+            font-size: 13px;
+            color: #ee4d2d;
+            font-weight: 600;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+    </style>
+    """, unsafe_allow_html=True)
 
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
@@ -55,10 +73,6 @@ def kirim_wa(pesan):
 if "keranjang" not in st.session_state:
     st.session_state.keranjang = []
 
-if "show_cart" not in st.session_state:
-    st.session_state.show_cart = False
-
-# formny
 if "nama_pemesan" not in st.session_state:
     st.session_state.nama_pemesan = ""
 if "kelas" not in st.session_state:
