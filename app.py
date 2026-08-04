@@ -168,20 +168,22 @@ if st.session_state.halaman == "produk":
                 st.session_state.keranjang.append(p)
                 st.rerun()
 
-   with st.container():
-    if st.button(
-        f"🛒 Keranjang ({len(st.session_state.keranjang)})",
-        key="btn_keranjang",
-    ):
-        st.session_state.halaman = "keranjang"
-        st.rerun()
+    button_container = st.container()
 
-    float_parent(
+    with button_container:
+        if st.button(
+            f"🛒 Keranjang ({len(st.session_state.keranjang)})",
+            key="btn_keranjang",
+            use_container_width=True,
+        ):
+            st.session_state.halaman = "keranjang"
+            st.rerun()
+
+    button_container.float(
         css="""
-        position:fixed;
-        bottom:30px;
-        right:30px;
-        z-index:9999;
+        bottom: 30px;
+        right: 30px;
+        width: 220px;
         """
     )
 # ========================================
