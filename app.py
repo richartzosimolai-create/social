@@ -3,9 +3,19 @@ import requests
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 
-# ===== CEK STATUS SIDEBAR =====
-if "show_cart" not in st.session_state:
-    st.session_state.show_cart = False
+# ===== INISIALISASI =====
+if "halaman" not in st.session_state:
+    st.session_state.halaman = "produk"  # "produk" atau "keranjang"
+
+if "keranjang" not in st.session_state:
+    st.session_state.keranjang = []
+
+if "nama_pemesan" not in st.session_state:
+    st.session_state.nama_pemesan = ""
+if "kelas" not in st.session_state:
+    st.session_state.kelas = ""
+if "no_hp" not in st.session_state:
+    st.session_state.no_hp = ""
 
 # fonte wa
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
@@ -24,16 +34,6 @@ def kirim_wa(pesan):
         return response.status_code == 200
     except:
         return False
-
-if "keranjang" not in st.session_state:
-    st.session_state.keranjang = []
-
-if "nama_pemesan" not in st.session_state:
-    st.session_state.nama_pemesan = ""
-if "kelas" not in st.session_state:
-    st.session_state.kelas = ""
-if "no_hp" not in st.session_state:
-    st.session_state.no_hp = ""
 
 produk = [
     {"id": 1, "nama": "Dubai chewy cookie strawberry", "harga": 67, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
@@ -156,9 +156,31 @@ st.markdown("""
         margin-top: 30px;
         border-top: 1px solid #eee;
     }
+    .cart-page {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .cart-total {
+        font-size: 24px;
+        font-weight: 700;
+        color: #ee4d2d;
+        text-align: right;
+        padding-top: 15px;
+        border-top: 2px solid #eee;
+        margin-top: 15px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
+# ===== HEADER =====
 st.markdown("""
 <div class="header">
     <h1>🛍️ <span>Social 9D</span> </h1>
@@ -166,101 +188,68 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-cols = st.columns(3)
+# ========================================
+# ===== HALAMAN PRODUK =====
+# ========================================
+if st.session_state.halaman == "produk":
 
-for i, p in enumerate(produk):
-    with cols[i % 3]:
-        
-        if "gambar" in p and p["gambar"]:
+    cols = st.columns(3)
+
+    for i, p in enumerate(produk):
+        with cols[i % 3]:
+            
+            if "gambar" in p and p["gambar"]:
+                st.markdown(f"""
+                <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
+                    <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                emoji = ["1", "2", "3", "4", "5", "6"][i]
+                st.markdown(f'<div class="gambar">{emoji}</div>', unsafe_allow_html=True)
+            
             st.markdown(f"""
-            <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
-                <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
+            <div class="product-card">
+                <h3>{p['nama']}</h3>
+                <p class="harga">Rp{p['harga']:,}</p>
             </div>
             """, unsafe_allow_html=True)
-        else:
-            emoji = ["1", "2", "3", "4", "5", "6"][i]
-            st.markdown(f'<div class="gambar">{emoji}</div>', unsafe_allow_html=True)
-        
-        st.markdown(f"""
-        <div class="product-card">
-            <h3>{p['nama']}</h3>
-            <p class="harga">Rp{p['harga']:,}</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button(f"🛒 Tambahkan ke Keranjang", key=f"add_{p['id']}"):
-            st.session_state.keranjang.append(p)
-            st.session_state.show_cart = True
-            st.rerun()
+            
+            if st.button(f"🛒 Tambahkan ke Keranjang", key=f"add_{p['id']}"):
+                st.session_state.keranjang.append(p)
+                st.rerun()
 
-total_item = len(st.session_state.keranjang)
-total_harga = sum(item['harga'] for item in st.session_state.keranjang)
-
-st.markdown(f"""
-<div class="cart-badge">
-    🛒 Keranjang
-    <span class="count">{total_item}</span>
-</div>
-""", unsafe_allow_html=True)
-
-# ===== TEKS DI SAMPING TOMBOL SIDEBAR =====
-if st.session_state.show_cart:
-    st.markdown("""
-    <style>
-        [data-testid="stSidebar"] button::after {
-            content: " ✕ klik untuk tutup keranjang" !important;
-            font-size: 13px !important;
-            color: #ff4444 !important;
-            font-weight: 600 !important;
-            background: white !important;
-            padding: 4px 12px !important;
-            border-radius: 20px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-            margin-left: 8px !important;
-            white-space: nowrap !important;
-            border: 1px solid #ff4444 !important;
-        }
-    </style>
+    # ===== TOMBOL KERANJANG FLOATING =====
+    total_item = len(st.session_state.keranjang)
+    st.markdown(f"""
+    <div class="cart-badge" onclick="st.session_state.halaman = 'keranjang'; st.rerun();" style="cursor:pointer;">
+        🛒 Keranjang
+        <span class="count">{total_item}</span>
+    </div>
     """, unsafe_allow_html=True)
+
+# ========================================
+# ===== HALAMAN KERANJANG =====
+# ========================================
 else:
-    st.markdown("""
-    <style>
-        [data-testid="stSidebar"] button::after {
-            content: " 👈 klik untuk buka keranjang" !important;
-            font-size: 13px !important;
-            color: #ee4d2d !important;
-            font-weight: 600 !important;
-            background: white !important;
-            padding: 4px 12px !important;
-            border-radius: 20px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-            margin-left: 8px !important;
-            white-space: nowrap !important;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-
-# ===== TOMBOL BUKA/TUTUP KERANJANG DI HALAMAN UTAMA =====
-col1, col2, col3 = st.columns([4, 2, 4])
-with col2:
-    if st.session_state.show_cart:
-        if st.button("✕ Tutup Keranjang", key="btn_toggle_cart", use_container_width=True):
-            st.session_state.show_cart = False
-            st.rerun()
-    else:
-        if st.button("🛒 Buka Keranjang", key="btn_toggle_cart", use_container_width=True):
-            st.session_state.show_cart = True
-            st.rerun()
-
-with st.sidebar:
     st.markdown("## 🛒 Keranjang Belanja")
+    st.markdown("---")
+    
+    total_item = len(st.session_state.keranjang)
+    total_harga = sum(item['harga'] for item in st.session_state.keranjang)
+    
+    # Tombol kembali
+    if st.button("← Kembali Belanja", key="btn_back"):
+        st.session_state.halaman = "produk"
+        st.rerun()
+    
     st.markdown("---")
     
     if len(st.session_state.keranjang) == 0:
         st.info("🛍️ Keranjang masih kosong")
     else:
         for idx, item in enumerate(st.session_state.keranjang):
-            col1, col2, col3 = st.columns([2, 1, 0.5])
+            col1, col2, col3 = st.columns([3, 1, 0.5])
             with col1:
                 st.write(f"**{item['nama']}**")
             with col2:
@@ -274,6 +263,7 @@ with st.sidebar:
         st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
         st.markdown("---")
         
+        # ===== FORM PEMESANAN =====
         with st.form("form_pesan"):
             st.markdown("### 📝 Data Pemesan")
             
@@ -338,6 +328,7 @@ with st.sidebar:
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
 
+# ===== FOOTER =====
 st.markdown(f"""
 <div class="footer">Jika ada pertanyaan bisa langsung di klik dan ngechat kita
     <a href="https://wa.me/{81180895229}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
