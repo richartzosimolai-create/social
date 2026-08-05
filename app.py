@@ -258,17 +258,20 @@ else:
                     """
                     
                     try:
-                        kirim_wa(pesan)
+                        berhasil = kirim_wa(pesan)
+
+                        if berhasil:
+                            st.success("✅ Pesanan berhasil dikirim!")
+                            st.balloons()
                         
-                        st.success(f"✅ Pesanan udah dikirim!")
-                        st.balloons()
+                            st.session_state.keranjang = []
+                            st.session_state.nama_pemesan = ""
+                            st.session_state.kelas = ""
+                            st.session_state.no_hp = ""
                         
-                        st.session_state.keranjang = []
-                        st.session_state.nama_pemesan = ""
-                        st.session_state.kelas = ""
-                        st.session_state.no_hp = ""
-                        
-                        st.rerun()
+                        else:
+                            st.error("❌ Gagal mengirim pesan WhatsApp. Silakan coba lagi.")
+                    
                     except Exception as e:
                         st.error(f"❌ Error: {e}")
 
