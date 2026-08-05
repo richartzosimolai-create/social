@@ -126,12 +126,12 @@ produk = [
 ]
 
 # CSS STYLING
-:root {
-    --primary: #ee4d2d;
-    --primary-hover: #d43b1f;
-}
 st.markdown("""
 <style>
+    :root {
+    --primary: #ee4d2d;
+    --primary-hover: #d43b1f;
+    }
     .header {
         background: white;
         padding: 15px 25px;
