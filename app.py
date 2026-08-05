@@ -298,9 +298,9 @@ if st.session_state.halaman == "produk":
 
     button_container.float(
         css=f"""
-        bottom: {CARD_FLOAT_BOTTOM};
-        right: {CARD_FLOAT_RIGHT};
-        width: {CARD_FLOAT_WIDTH};
+        bottom: {CART_FLOAT_BOTTOM};
+        right: {CART_FLOAT_RIGHT};
+        width: {CART_FLOAT_WIDTH};
         """
     )
 
