@@ -266,9 +266,9 @@ if st.session_state.halaman == "produk":
         with cols[i % 3]:
             
             if p["gambar"]:
-                f"""
+                st.markdown(f"""
                     <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
-                    <img src="{gambar}" style="width:100%; height:100%; object-fit:cover;">
+                    <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 """, unsafe_allow_html=True)
 
