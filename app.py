@@ -1,51 +1,135 @@
-import streamlit as st
+# IMPORTS
 import requests
+import streamlit as st
 from streamlit_float import float_init
 
+# PAGE CONFIG
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 float_init()
 
+# SESSION STATE
+defaults = {
+    "halaman": "produk",
+    "keranjang": [],
+    "nama_pemesan": "",
+    "kelas": "",
+    "no_hp": "",
+}
 
-if "halaman" not in st.session_state:
-    st.session_state.halaman = "produk"
+for key, value in defaults.items();
+    st.session_state.setdefault(key, value)
 
-if "keranjang" not in st.session_state:
-    st.session_state.keranjang = []
-
-if "nama_pemesan" not in st.session_state:
-    st.session_state.nama_pemesan = ""
-if "kelas" not in st.session_state:
-    st.session_state.kelas = ""
-if "no_hp" not in st.session_state:
-    st.session_state.no_hp = ""
-
-# fonte wa
+# WHATSAPP CONFIG
 FONNTE_API = "AHUP2hyJ32GrzWzBfmxa"  
-NO_HP = "81180895229"      
+ADMIN_PHONE = "81180895229"      
 
 def kirim_wa(pesan):
     url = "https://api.fonnte.com/send"
+    
     data = {
-        "target": NO_HP,
+        "target": ADMIN_PHONE,
         "message": pesan,
         "countryCode": "62",
     }
-    headers = {"Authorization": FONNTE_API}
+    
+    headers = {
+        "Authorization": FONNTE_API
+    }
+    
     try:
-        response = requests.post(url, data=data, headers=headers, timeout=10)
-        return response.status_code == 200
-    except:
+        response = requests.post(
+            url,
+            data=data,
+            headers=headers,
+            timeout=10,
+        )
+        
+        return response.ok
+    
+    except Exception as e:
+        print(f"WhatsApp error: {e}")
         return False
 
+def format_rupiah(nominal):
+    return f"Rp{nominal:,}"
+
+def data_lengkap(nama, kelas, hp):
+    return bool(nama and kelas and hp)
+
+def buat_detail_order(keranjang):
+    return "\n".join(
+        [
+            f"- {item['nama']} ({format_rupiah(item['harga'])})"
+            for item in keranjang
+        ]
+    )
+
+def buat_pesan(nama, kelas, hp, detail, total):
+    return f"""
+🛍️ *PESANAN BARU!*
+━━━━━━━━━━━━━━━━
+👤 Nama: {nama}
+🏫 Kelas: {kelas}
+📱 No. HP: {hp}
+━━━━━━━━━━━━━━━━
+📦 *Detail Pesanan:*
+{detail}
+━━━━━━━━━━━━━━━━
+💰 *Total: {format_rupiah(total)}*
+━━━━━━━━━━━━━━━━
+"""
+
+def reset_pesanan():
+    st.session_state.keranjang = []
+    st.session_state.nama_pemesan = ""
+    st.session_state.kelas = ""
+    st.session_state.no_hp = ""
+
+# PRODUCT DATA
 produk = [
-    {"id": 1, "nama": "Dubai chewy cookie strawberry", "harga": 67, "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"},
-    {"id": 2, "nama": "Chilis", "harga": 67, "gambar": "https://i.ibb.co.com/GvvnbcHn/Whats-App-Image-2026-08-02-at-19-03-45.jpg"},
-    {"id": 3, "nama": "Samyang roll moza", "harga": 67, "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"},
-    {"id": 4, "nama": "Scoopable cookies", "harga": 67, "gambar": "https://i.ibb.co.com/BVBH8p65/Whats-App-Image-2026-08-02-at-19-03-46.jpg"},
-    {"id": 5, "nama": "Milo dino", "harga": 67, "gambar": "https://i.imgur.com/YgPzFFl.jpeg"},
-    {"id": 6, "nama": "Mojito", "harga": 67, "gambar": "https://i.imgur.com/dvcbExw.jpeg"},
+    {
+        "id": 1,
+        "nama": "Dubai chewy cookie strawberry",
+        "harga": 67,
+        "gambar": "https://i.ibb.co.com/xSTTgJ1K/dubai.jpg"
+    },
+    {
+        "id": 2,
+        "nama": "Chilis",
+        "harga": 67,
+        "gambar": "https://i.ibb.co.com/GvvnbcHn/Whats-App-Image-2026-08-02-at-19-03-45.jpg"
+    },
+    {
+        "id": 3,
+        "nama": "Samyang roll moza",
+        "harga": 67,
+        "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"
+    },
+    {
+        "id": 4,
+        "nama": "Scoopable cookies",
+        "harga": 67,
+        "gambar": "https://i.ibb.co.com/BVBH8p65/Whats-App-Image-2026-08-02-at-19-03-46.jpg"
+    },
+    {
+        "id": 5,
+        "nama": "Milo dino",
+        "harga": 67,
+        "gambar": "https://i.imgur.com/YgPzFFl.jpeg"
+    },
+    {
+        "id": 6,
+        "nama": "Mojito",
+        "harga": 67,
+        "gambar": "https://i.imgur.com/dvcbExw.jpeg"
+    },
 ]
 
+# CSS STYLING
+:root {
+    --primary: #ee4d2d;
+    --primary-hover: #d43b1f;
+}
 st.markdown("""
 <style>
     .header {
@@ -67,10 +151,10 @@ st.markdown("""
         margin: 0;
     }
     .header h1 span {
-        color: #ee4d2d;
+        color: var(--primary);
     }
     .header .badge {
-        background: #ee4d2d;
+        background: var(--primary);
         color: white;
         padding: 6px 16px;
         border-radius: 30px;
@@ -86,14 +170,11 @@ st.markdown("""
         transition: transform 0.2s, box-shadow 0.2s;
         height: 100%;
         border: 1px solid #f0f0f0;
+        animation: fadeIn 0.5s ease;
     }
     .product-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-    .product-card .gambar {
-        font-size: 50px;
-        margin-bottom: 8px;
     }
     .product-card h3 {
         font-size: 16px;
@@ -103,21 +184,21 @@ st.markdown("""
     .product-card .harga {
         font-size: 20px;
         font-weight: 700;
-        color: #ee4d2d;
+        color: var(--primary);
         margin-bottom: 10px;
     }
     .stButton > button {
-        background: #ee4d2d !important;
-        color: white !important;
-        border: none !important;
-        width: 100% !important;
-        border-radius: 10px !important;
-        font-weight: 600 !important;
-        padding: 8px !important;
-        font-size: 14px !important;
+        background: var(--primary);
+        color: white;
+        border: none;
+        width: 100%;
+        border-radius: 10px;
+        font-weight: 600;
+        padding: 8px;
+        font-size: 14px;
     }
     .stButton > button:hover {
-        background: #d43b1f !important;
+        background: var(--primary-hover) !important;
     }
     .footer {
         text-align: center;
@@ -127,47 +208,88 @@ st.markdown("""
         margin-top: 30px;
         border-top: 1px solid #eee;
     }
+    @media (max-width: 768px){
+        .header {
+            padding: 12px 15px;
+        }
+        .header h1 {
+            font-size: 20px;
+        }
+        .product-card {
+            padding: 12px;
+        }
+        .product-card h3 {
+            font-size: 14px;
+        }
+        .product-card .harga {
+            font-size: 18px;
+        }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
+jumlah_produk = len(produk)
+SHOP_NAME = "Social 9D"
+ADD_CART_TEXT = "🛒 Tambahkan ke Keranjang"
+CART_BUTTON_TEXT = "🛒 Keranjang"
+DELETE_BUTTON_TEXT = "✕"
+ORDER_FORM_KEY = "form_pesan"
+SUBMIT_ORDER_TEXT = "✅ Kirim Pesanan"
+NAME_INPUT_KEY = "input_nama"
+CLASS_INPUT_KEY = "input_kelas"
+PHONE_INPUT_KEY = "input_nohp"
+CART_FLOAT_BOTTOM = "30px"
+CART_FLOAT_RIGHT = "30px"
+CART_FLOAT_WIDTH = "220px"
+
+st.markdown(f"""
 <div class="header">
-    <h1>🛍️ <span>Social 9D</span> </h1>
-    <div class="badge">6 Produk</div>
+    <h1>🛍️ <span>{SHOP_NAME}</span></h1>
+    <div class="badge">{jumlah_produk} Produk</div>
 </div>
 """, unsafe_allow_html=True)
 
-#halaman awal
+# PRODUCT PAGE
 if st.session_state.halaman == "produk":
-
     cols = st.columns(3)
 
     for i, p in enumerate(produk):
         with cols[i % 3]:
-
-            if "gambar" in p and p["gambar"]:
-                st.markdown(f"""
-                <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
-                    <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
+            
+            if p["gambar"]:
+                f"""
+                    <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
+                    <img src="{gambar}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 """, unsafe_allow_html=True)
 
             st.markdown(f"""
             <div class="product-card">
                 <h3>{p['nama']}</h3>
-                <p class="harga">Rp{p['harga']:,}</p>
+                <p class="harga">{format_rupiah(p['harga'])}</p>
             </div>
             """, unsafe_allow_html=True)
 
-            if st.button(f"🛒 Tambahkan ke Keranjang", key=f"add_{p['id']}"):
-                st.session_state.keranjang.append(p)
+            if st.button(ADD_CART_TEXT, key=f"add_{p['id']}"):
+                st.session_state.keranjang.append(p.copy())
                 st.rerun()
 
+    cart_count = len(st.session_state.keranjang)
+    
     button_container = st.container()
 
     with button_container:
         if st.button(
-            f"🛒 Keranjang ({len(st.session_state.keranjang)})",
+            f"{CART_BUTTON_TEXT} ({cart_count})",
             key="btn_keranjang",
             use_container_width=True,
         ):
@@ -175,18 +297,19 @@ if st.session_state.halaman == "produk":
             st.rerun()
 
     button_container.float(
-        css="""
-        bottom: 30px;
-        right: 30px;
-        width: 220px;
+        css=f"""
+        bottom: {CARD_FLOAT_BOTTOM};
+        right: {CARD_FLOAT_RIGHT};
+        width: {CARD_FLOAT_WIDTH};
         """
     )
-#halaman keranjangny
+
+# CART PAGE
 else:
     st.markdown("## 🛒 Keranjang ")
     st.markdown("---")
     
-    total_harga = sum(item['harga'] for item in st.session_state.keranjang)
+    cart_empty = len(st.session_state.keranjang) == 0
     
     if st.button("← Kembali ", key="btn_back"):
         st.session_state.halaman = "produk"
@@ -194,7 +317,7 @@ else:
     
     st.markdown("---")
     
-    if len(st.session_state.keranjang) == 0:
+    if cart_empty:
         st.info("🛍️ Keranjang masih kosong")
     else:
         for idx, item in enumerate(st.session_state.keranjang):
@@ -202,60 +325,57 @@ else:
             with col1:
                 st.write(f"**{item['nama']}**")
             with col2:
-                st.write(f"Rp{item['harga']:,}")
+                st.write(format_rupiah(item["harga"]))
             with col3:
-                if st.button("✕", key=f"del_{idx}"):
-                    st.session_state.keranjang.pop(idx)
+                if st.button(DELETE_BUTTON_TEXT, key=f"del_{idx}"):
+                    del st.session_state.keranjang[idx]
                     st.rerun()
         
         st.markdown("---")
+        
+        total_harga = sum(item['harga'] for item in st.session_state.keranjang)
+        
         st.markdown(f"### 💰 Total: **Rp{total_harga:,}**")
         st.markdown("---")
         
-        with st.form("form_pesan"):
+        with st.form(ORDER_FORM_KEY):
             st.markdown("### 📝 Data Pemesan")
             
             nama_pemesan = st.text_input(
-                "Nama Lengkap", 
-                value=st.session_state.nama_pemesan,
+                "Nama Lengkap",
+            value=st.session_state.nama_pemesan,
                 placeholder="Masukkan nama kamu",
-                key="input_nama"
+                key=NAME_INPUT_KEY
             )
             kelas = st.text_input(
                 "Kelas", 
                 value=st.session_state.kelas,
                 placeholder="Contoh: 10 IPA 1",
-                key="input_kelas"
+                key=CLASS_INPUT_KEY
             )
             no_hp = st.text_input(
                 "No. HP (WA)", 
                 value=st.session_state.no_hp,
                 placeholder="Contoh: 08123456789",
-                key="input_nohp"
+                key=PHONE_INPUT_KEY
             )
             
-            submit = st.form_submit_button("✅ Kirim Pesanan", use_container_width=True)
+            submit = st.form_submit_button(SUBMIT_ORDER_TEXT, use_container_width=True)
             
             if submit:
-                if not nama_pemesan or not kelas or not no_hp:
+                if not data_lengkap(nama_pemesan, kelas, no_hp):
                     st.error("❌ Semua data harus diisi!")
                 elif len(st.session_state.keranjang) == 0:
                     st.error("❌ Keranjang masih kosong!")
                 else:
-                    detail_order = "\n".join([f"- {item['nama']} (Rp{item['harga']:,})" for item in st.session_state.keranjang])
-                    pesan = f"""
-🛍️ *PESANAN BARU!*
-━━━━━━━━━━━━━━━━
-👤 Nama: {nama_pemesan}
-🏫 Kelas: {kelas}
-📱 No. HP: {no_hp}
-━━━━━━━━━━━━━━━━
-📦 *Detail Pesanan:*
-{detail_order}
-━━━━━━━━━━━━━━━━
-💰 *Total: Rp{total_harga:,}*
-━━━━━━━━━━━━━━━━
-                    """
+                    detail_order = buat_detail_order(st.session_state.keranjang)
+                    pesan = buat_pesan(
+                        nama_pemesan,
+                        kelas,
+                        no_hp,
+                        detail_order,
+                        total_harga
+                    )
                     
                     try:
                         berhasil = kirim_wa(pesan)
@@ -264,10 +384,7 @@ else:
                             st.success("✅ Pesanan berhasil dikirim!")
                             st.balloons()
                         
-                            st.session_state.keranjang = []
-                            st.session_state.nama_pemesan = ""
-                            st.session_state.kelas = ""
-                            st.session_state.no_hp = ""
+                            reset_pesanan()
                         
                         else:
                             st.error("❌ Gagal mengirim pesan WhatsApp. Silakan coba lagi.")
@@ -277,7 +394,7 @@ else:
 
 st.markdown(f"""
 <div class="footer">Jika ada pertanyaan bisa langsung di klik dan ngechat kita
-    <a href="https://wa.me/{81180895229}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
+    <a href="https://wa.me/{NO_HP}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
        bisa diklik
     </a>
 </div>
