@@ -394,7 +394,7 @@ else:
 
 st.markdown(f"""
 <div class="footer">Jika ada pertanyaan bisa langsung di klik dan ngechat kita
-    <a href="https://wa.me/{NO_HP}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
+    <a href="https://wa.me/{ADMIN_PHONE}" target="_blank" style="color:#ee4d2d; text-decoration:none; font-weight:600;">
        bisa diklik
     </a>
 </div>
