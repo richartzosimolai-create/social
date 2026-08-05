@@ -16,7 +16,7 @@ defaults = {
     "no_hp": "",
 }
 
-for key, value in defaults.items();
+for key, value in defaults.items():
     st.session_state.setdefault(key, value)
 
 # WHATSAPP CONFIG
