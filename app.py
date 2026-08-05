@@ -1,11 +1,11 @@
 import streamlit as st
 import requests
-from streamlit_float import float_init, float_parent
+from streamlit_float import float_init
 
 st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
 float_init()
 
-# ===== INISIALISASI =====
+
 if "halaman" not in st.session_state:
     st.session_state.halaman = "produk"
 
@@ -151,9 +151,6 @@ if st.session_state.halaman == "produk":
                     <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
                 """, unsafe_allow_html=True)
-            else:
-                emoji = ["1", "2", "3", "4", "5", "6"][i]
-                st.markdown(f'<div class="gambar">{emoji}</div>', unsafe_allow_html=True)
 
             st.markdown(f"""
             <div class="product-card">
@@ -189,7 +186,6 @@ else:
     st.markdown("## 🛒 Keranjang ")
     st.markdown("---")
     
-    total_item = len(st.session_state.keranjang)
     total_harga = sum(item['harga'] for item in st.session_state.keranjang)
     
     if st.button("← Kembali ", key="btn_back"):
@@ -264,12 +260,8 @@ else:
                     try:
                         kirim_wa(pesan)
                         
-                        wa_text = f"Halo {nama_pemesan}, pesanan Anda sedang kami proses. Total Rp{total_harga:,}"
-                        wa_link = f"https://api.whatsapp.com/send?phone={no_hp}&text={wa_text.replace(' ', '%20')}"
-                        
                         st.success(f"✅ Pesanan udah dikirim!")
                         st.balloons()
-                        st.markdown(f"📱 [Klik di sini untuk chat via WhatsApp]({wa_link})")
                         
                         st.session_state.keranjang = []
                         st.session_state.nama_pemesan = ""
