@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_float import float_init
 
 # PAGE CONFIG
-st.set_page_config(page_title="Social 9D", page_icon="🛍️", layout="wide")
+st.set_page_config(page_title="D’Bite Delight", page_icon="🛍️", layout="wide")
 float_init()
 
 # SESSION STATE
