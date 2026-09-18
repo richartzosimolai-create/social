@@ -238,7 +238,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 jumlah_produk = len(produk)
-SHOP_NAME = "Social 9D"
+SHOP_NAME = "D’Bite Delight"
 ADD_CART_TEXT = "🛒 Tambahkan ke Keranjang"
 CART_BUTTON_TEXT = "🛒 Keranjang"
 DELETE_BUTTON_TEXT = "✕"
