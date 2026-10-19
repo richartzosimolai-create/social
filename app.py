@@ -103,7 +103,7 @@ produk = [
         "id": 3,
         "nama": "Samyang roll moza",
         "harga": 25000,
-        "gambar": "https://i.ibb.co.com/TBKfvx1G/Whats-App-Image-2026-08-02-at-19-03-45-1.jpg"
+        "gambar": "https://i.ibb.co.com/67Rpyhdk/jycgcg.jpg"
     },
     {
         "id": 4,
