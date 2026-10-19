@@ -125,13 +125,25 @@ produk = [
     },
 ]
 
+
 # CSS STYLING
 st.markdown("""
 <style>
     :root {
-    --primary: #ee4d2d;
-    --primary-hover: #d43b1f;
+        --primary: #ee4d2d;
+        --primary-hover: #d43b1f;
     }
+
+    /* DASAR TAMPILAN */
+    html {
+        min-width: 100%;
+    }
+
+    .stApp {
+        background: #ffffff;
+    }
+
+    /* HEADER */
     .header {
         background: white;
         padding: 15px 25px;
@@ -140,19 +152,25 @@ st.markdown("""
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 20px;
         margin-bottom: 25px;
         position: sticky;
         top: 0;
         z-index: 100;
+        box-sizing: border-box;
     }
+
     .header h1 {
         font-size: 24px;
         color: #1a1a1a;
         margin: 0;
+        white-space: nowrap;
     }
+
     .header h1 span {
         color: var(--primary);
     }
+
     .header .badge {
         background: var(--primary);
         color: white;
@@ -160,34 +178,58 @@ st.markdown("""
         border-radius: 30px;
         font-size: 13px;
         font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
+
+    /* KARTU PRODUK */
     .product-card {
         background: white;
         border-radius: 16px;
         padding: 15px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.06);
         text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
         height: 100%;
+        box-sizing: border-box;
         border: 1px solid #f0f0f0;
         animation: fadeIn 0.5s ease;
     }
-    .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
+
     .product-card h3 {
         font-size: 16px;
         margin: 5px 0;
         color: #1a1a1a;
+        line-height: 1.4;
     }
+
     .product-card .harga {
         font-size: 20px;
         font-weight: 700;
         color: var(--primary);
         margin-bottom: 10px;
     }
-    .stButton > button {
+
+    /* GAMBAR PRODUK */
+    .product-image {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #f5f5f5;
+        border: 1px solid #eee;
+        box-sizing: border-box;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* SEMUA TOMBOL */
+    .stButton > button,
+    .stFormSubmitButton > button {
         background: var(--primary);
         color: white;
         border: none;
@@ -196,10 +238,18 @@ st.markdown("""
         font-weight: 600;
         padding: 8px;
         font-size: 14px;
+        min-height: 40px;
+        white-space: nowrap;
     }
-    .stButton > button:hover {
+
+    .stButton > button:hover,
+    .stFormSubmitButton > button:hover {
         background: var(--primary-hover) !important;
+        color: white !important;
+        border: none !important;
     }
+
+    /* FOOTER */
     .footer {
         text-align: center;
         padding: 20px 0 10px;
@@ -208,22 +258,8 @@ st.markdown("""
         margin-top: 30px;
         border-top: 1px solid #eee;
     }
-    @media (max-width: 768px){
-        .header {
-            padding: 12px 15px;
-        }
-        .header h1 {
-            font-size: 20px;
-        }
-        .product-card {
-            padding: 12px;
-        }
-        .product-card h3 {
-            font-size: 14px;
-        }
-        .product-card .harga {
-            font-size: 18px;
-        }
+
+    /* ANIMASI */
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -234,8 +270,67 @@ st.markdown("""
             transform: translateY(0);
         }
     }
+
+    /* HP: PERTAHANKAN LAYOUT SEPERTI DESKTOP */
+    @media (max-width: 768px) {
+        /* Buat halaman lebih lebar daripada layar HP.
+           Pengguna dapat menggeser halaman ke samping. */
+        .stApp,
+        [data-testid="stAppViewContainer"] {
+            min-width: 1050px !important;
+        }
+
+        [data-testid="stMainBlockContainer"] {
+            min-width: 1000px !important;
+            max-width: 1000px !important;
+            box-sizing: border-box;
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+        }
+
+        /* Paksa kolom produk tetap sejajar */
+        [data-testid="stHorizontalBlock"] {
+            flex-wrap: nowrap !important;
+            gap: 1rem !important;
+        }
+
+        [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+            min-width: 0 !important;
+            flex: 1 1 0% !important;
+        }
+
+        /* Samakan ukuran header dengan desktop */
+        .header {
+            padding: 15px 25px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        /* Samakan ukuran kartu dan tulisan dengan desktop */
+        .product-card {
+            padding: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 16px;
+        }
+
+        .product-card .harga {
+            font-size: 20px;
+        }
+
+        /* Pertahankan ukuran tombol */
+        .stButton > button,
+        .stFormSubmitButton > button {
+            font-size: 14px;
+            padding: 8px;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
+
 
 jumlah_produk = len(produk)
 SHOP_NAME = "D’Bite Delight"
@@ -247,8 +342,8 @@ SUBMIT_ORDER_TEXT = "✅ Kirim Pesanan"
 NAME_INPUT_KEY = "input_nama"
 CLASS_INPUT_KEY = "input_kelas"
 PHONE_INPUT_KEY = "input_nohp"
-CART_FLOAT_BOTTOM = "30px"
-CART_FLOAT_RIGHT = "30px"
+CART_FLOAT_BOTTOM = "20px"
+CART_FLOAT_RIGHT = "20px"
 CART_FLOAT_WIDTH = "220px"
 
 st.markdown(f"""
@@ -265,12 +360,14 @@ if st.session_state.halaman == "produk":
     for i, p in enumerate(produk):
         with cols[i % 3]:
             
+            
             if p["gambar"]:
                 st.markdown(f"""
-                    <div style="width:100%; aspect-ratio:1/1; overflow:hidden; border-radius:12px; background:#f5f5f5; border:1px solid #eee;">
-                    <img src="{p['gambar']}" style="width:100%; height:100%; object-fit:cover;">
-                </div>
+                    <div class="product-image">
+                        <img src="{p['gambar']}">
+                    </div>
                 """, unsafe_allow_html=True)
+
 
             st.markdown(f"""
             <div class="product-card">
